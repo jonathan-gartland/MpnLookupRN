@@ -144,7 +144,7 @@ const ButtonView = () => {
   return (
     <>
       <View style={styles.top}>
-        <Text style={styles.topText}>MPN Lookup</Text>
+        <Text testID="mpnl-title" style={styles.topText}>MPN Lookup</Text>
         <Text style={styles.topTextSmall}>
           Built using Obytes Starter (create-obytes-app)
         </Text>
