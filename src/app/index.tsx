@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  useColorScheme,
-} from 'react-native';
+import { SafeAreaView, ScrollView, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import ButtonView from '@/components/button-view';
@@ -19,7 +15,8 @@ function App(): React.JSX.Element {
     <SafeAreaView style={backgroundStyle}>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
+        style={backgroundStyle}
+      >
         <ButtonView />
       </ScrollView>
     </SafeAreaView>
@@ -27,5 +24,3 @@ function App(): React.JSX.Element {
 }
 
 export default App;
-
-

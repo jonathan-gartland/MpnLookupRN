@@ -10,6 +10,9 @@ describe("Home", () => {
   // afterEach(() => {});
   it("renders MPN Lookup Home view", () => {
     const qtButton = screen.getByTestId("qt-button");
+    const qt2kButton = screen.getByTestId("qt2k-button");
+    const qtLButton = screen.getByTestId("qtl-button");
+    const aboutButton = screen.getByTestId("about");
     expect(qtButton).toBeDefined();
     // const header = screen.getByRole("heading", { name: /MPN Lookup/i });
     // expect(header).toBeInTheDocument();

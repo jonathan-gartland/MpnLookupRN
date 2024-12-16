@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { StyleSheet,Text, TextInput, View } from "react-native";
+import React, { useState } from 'react';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { getMpn } from '@/util/mpn.lookup';
 
@@ -25,7 +25,7 @@ const QtDiv: React.FC<MyComponentProps> = ({ testtype }) => {
   const handleChangeQt = (text: string) => {
     setInputQt(Number(text));
   };
-  const mpnVal = getMpn("qt", { large: inputQt, small: 0 }) || [];
+  const mpnVal = getMpn('qt', { large: inputQt, small: 0 }) || [];
   return (
     <View>
       <Heading title="QuantiTray® MPN" />
@@ -37,7 +37,9 @@ const QtDiv: React.FC<MyComponentProps> = ({ testtype }) => {
       />
       {testtype === 'quanti' && mpnVal.length > 0 && (
         <View>
-          <Text testID="qt-mpn-number" style={styles.result}>MPN: {mpnVal[0]}</Text>
+          <Text testID="qt-mpn-number" style={styles.result}>
+            MPN: {mpnVal[0]}
+          </Text>
           <Text style={styles.confidence}>95% Confidence</Text>
           <View style={styles.row}>
             <Text>Low: {mpnVal[1]}</Text>
@@ -61,8 +63,7 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
     setInputQt2kS(Number(text));
   };
 
-  const mpnVal =
-    getMpn("qt2k", { large: inputQt2kL, small: inputQt2kS }) || [];
+  const mpnVal = getMpn('qt2k', { large: inputQt2kL, small: inputQt2kS }) || [];
 
   return (
     <View>
@@ -81,7 +82,7 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
         <View style={styles.inputWrapper}>
           <Text>Small</Text>
           <TextInput
-            testID={"qt2k-small"}
+            testID={'qt2k-small'}
             style={styles.input}
             keyboardType="numeric"
             value={String(inputQt2kS)}
@@ -91,9 +92,7 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
       </View>
       {testtype === 'quanti2k' && mpnVal.length > 0 && (
         <View>
-          <Text style={[styles.result, styles.qt2kmpn]}>
-            MPN: {mpnVal[0]}
-          </Text>
+          <Text style={[styles.result, styles.qt2kmpn]}>MPN: {mpnVal[0]}</Text>
           <Text style={[styles.confidence, styles.qt2kmpn]}>
             95% Confidence
           </Text>
@@ -119,7 +118,7 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
     setInputLS(Number(text));
   };
 
-  const mpnVal = getMpn("legio", { large: inputLL, small: inputLS }) || [];
+  const mpnVal = getMpn('legio', { large: inputLL, small: inputLS }) || [];
 
   return (
     <View>
@@ -144,7 +143,7 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
           />
         </View>
       </View>
-      {testtype === "legio" && (
+      {testtype === 'legio' && (
         <View>
           <Text style={styles.result}>MPN: {mpnVal}</Text>
         </View>
@@ -153,45 +152,39 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
   );
 };
 const LookupComponent: React.FC<MyComponentProps> = ({ testtype }) => {
-
-
-
-
-
-
   return (
     <View>
-      {testtype === "quanti" && <QtDiv testtype="quanti" />}
-      {testtype === "quanti2k" && <Qt2kDiv testtype="quanti2k" />}
-      {testtype === "legio" && <QtLDiv testtype="legio" />}
+      {testtype === 'quanti' && <QtDiv testtype="quanti" />}
+      {testtype === 'quanti2k' && <Qt2kDiv testtype="quanti2k" />}
+      {testtype === 'legio' && <QtLDiv testtype="legio" />}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   header: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 24,
     paddingBottom: 16,
     paddingTop: 16,
   },
   subHeader: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 20,
     paddingBottom: 16,
   },
   inputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     paddingBottom: 16,
     marginHorizontal: 20,
   },
   inputWrapper: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
   },
   inputQt: {
-    width: "40%",
+    width: '40%',
     left: 30,
   },
   qt2kmpn: {
@@ -212,15 +205,15 @@ const styles = StyleSheet.create({
     left: 10,
   },
   input: {
-    width: "50%",
+    width: '50%',
     fontSize: 24,
     padding: 8,
-    borderColor: "gray",
+    borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 4,
     marginHorizontal: 20,
     marginBottom: 16,
-    textAlign: "center",
+    textAlign: 'center',
   },
   result: {
     fontSize: 20,
@@ -233,8 +226,8 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginHorizontal: 24,
   },
 });
