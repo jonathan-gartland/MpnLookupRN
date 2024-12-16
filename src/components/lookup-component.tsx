@@ -37,7 +37,7 @@ const QtDiv: React.FC<MyComponentProps> = ({ testtype }) => {
       />
       {testtype === 'quanti' && mpnVal.length > 0 && (
         <View>
-          <Text style={styles.result}>MPN: {mpnVal[0]}</Text>
+          <Text data-testid="qt-mpn-number" style={styles.result}>MPN: {mpnVal[0]}</Text>
           <Text style={styles.confidence}>95% Confidence</Text>
           <View style={styles.row}>
             <Text>Low: {mpnVal[1]}</Text>
