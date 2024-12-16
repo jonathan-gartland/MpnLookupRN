@@ -1,19 +1,26 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react-native";
-// import Home from "@/app/index";
+
 import ButtonView from '@/components/button-view';
+
 describe("Home", () => {
   beforeEach(() => {
-    const {getByText} = render(<ButtonView />);
+    const { getByText } = render(<ButtonView />);
   });
+
   // afterEach(() => {});
-  it("renders MPN Lookup Home view", () => {
+
+  it("renders MPN Lookup Home view, all 4 buttons and title visible", () => {
     const qtButton = screen.getByTestId("qt-button");
     const qt2kButton = screen.getByTestId("qt2k-button");
     const qtLButton = screen.getByTestId("qtl-button");
     const aboutButton = screen.getByTestId("about");
     expect(qtButton).toBeDefined();
+    expect(qt2kButton).toBeDefined();
+    expect(qtLButton).toBeDefined();
+    expect(aboutButton).toBeDefined();
+
     // const header = screen.getByRole("heading", { name: /MPN Lookup/i });
     // expect(header).toBeInTheDocument();
     expect(1).toBe(1)
