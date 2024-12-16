@@ -47,21 +47,21 @@ describe('Home', () => {
 
   it("clicks the About button and verifies Have Fun! text", async () => {
     fireEvent.press(screen.getByText("About"));
-    expect(await screen.findByText(/have fun!/i)).toBeOnTheScreen()
+    expect(await screen.findByText(/have fun!/i)).toBeOnTheScreen();
   });
 
-  // it("clicks the Quantitray&reg; button and verifies text", async () => {
-  //   fireEvent.click(screen.getByTestId("qt-button"));
-  //   expect(await screen.findByText(/Quantitray/i)).toBeInTheDocument();
-  // });
-  //
-  // it("clicks the Quantitray2000$reg; button and verifies text", async () => {
-  //   fireEvent.click(screen.getByTestId("qt2k-button"));
-  //   expect(await screen.findByText(/Quantitray2000/i)).toBeInTheDocument();
-  // });
-  //
-  // it("clicks the Legiolert button and verifies Have Fun! text", async () => {
-  //   fireEvent.click(screen.getByText("Legiolert"));
-  //   expect(await screen.findByText(/Legiolert MPN/i)).toBeInTheDocument();
-  // });
+  it("clicks the Quantitray&reg; button and verifies text", async () => {
+    fireEvent.press(screen.getByTestId("qt-button"));
+    expect(await screen.findByText(/Quantitray/i)).toBeOnTheScreen();
+  });
+
+  it("clicks the Quantitray2000$reg; button and verifies text", async () => {
+    fireEvent.press(screen.getByTestId("qt2k-button"));
+    expect(await screen.findByText(/Quantitray2000/i)).toBeOnTheScreen();
+  });
+
+  it("clicks the Legiolert button and verifies Have Fun! text", async () => {
+    fireEvent.press(screen.getByText("Legiolert"));
+    expect(await screen.findByText(/Legiolert MPN/i)).toBeOnTheScreen();
+  });
 });
