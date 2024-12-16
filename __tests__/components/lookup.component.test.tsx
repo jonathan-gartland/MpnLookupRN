@@ -9,8 +9,7 @@ describe("LookupComponent", () => {
     // debug();
     // expect(1).toBe(1);
     const mpnNum =  screen.getByTestId('qt-mpn-number');
-    debug(mpnNum);
-    // expect(mpnNum)
+    expect(mpnNum).toBeDefined();
   });
   //
   // it("renders QuantiTray2000 inputs and calculates MPN", () => {
