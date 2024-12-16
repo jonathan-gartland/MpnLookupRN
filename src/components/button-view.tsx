@@ -175,7 +175,7 @@ const ButtonView = () => {
                 <Text style={commonStyles.buttonText}>Legiolert</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                testID="about"
+                testID="about-button"
                 onPress={() => setAboutButton(true)}
                 style={commonStyles.button}
               >

@@ -3,6 +3,7 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 
 import ButtonView from '@/components/button-view';
+import { TouchableOpacity } from 'react-native';
 
 describe('Home', () => {
 
@@ -18,7 +19,8 @@ describe('Home', () => {
     const qtButton = screen.getByTestId('qt-button');
     const qt2kButton = screen.getByTestId('qt2k-button');
     const qtLButton = screen.getByTestId('qtl-button');
-    const aboutButton = screen.getByTestId('about');
+    const aboutButton = screen.getByTestId('about-button');
+    const onButtonPressMock = jest.fn();
     expect(title).toBeDefined();
     expect(title.props.children).toBe('MPN Lookup');
 
@@ -28,6 +30,21 @@ describe('Home', () => {
     expect(aboutButton).toBeDefined();
 
     expect(1).toBe(1);
+  });
+
+  it('onPressItem is called when pressed', () => {
+    const onPressMock = jest.fn();
+    const { getByText, getByTestId } = render(<TouchableOpacity onPress={onPressMock}/>);
+
+    // find the TouchableOpacity and Text elements
+    //const buttonAbout = getByTestId('about-button');
+    //const text1 = getByText('About');
+
+
+    // fireEvent.press(text1);
+
+    // the PressMock handle is called with the 'id' of the item passed as an argument
+    // expect(onPressMock).toHaveBeenCalledWith('about-button');
   });
   //
   // it("clicks the About button and verifies Have Fun! text", async () => {
