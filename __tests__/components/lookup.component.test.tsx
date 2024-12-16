@@ -6,9 +6,10 @@ import LookupComponent from "@/components/lookup-component";
 describe("LookupComponent", () => {
   it("renders QuantiTray input and looks up MPN", () => {
     const {getByTestId, debug } = render(<LookupComponent testtype="quanti" />);
-    debug();
-    expect(1).toBe(1);
-    // const mpnNum =  screen.getByText(/MPN:\s*< 1.0/i);
+    // debug();
+    // expect(1).toBe(1);
+    const mpnNum =  screen.getByTestId('qt-mpn-number');
+    debug(mpnNum);
     // expect(mpnNum)
   });
   //
