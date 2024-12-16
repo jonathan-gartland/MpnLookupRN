@@ -154,6 +154,7 @@ const ButtonView = () => {
           <View style={[commonStyles.container, styles.tc]}>
             <View>
               <TouchableOpacity
+                testID="qt-button"
                 onPress={() => setQtButton(true)}
                 style={commonStyles.button}
               >

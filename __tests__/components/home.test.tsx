@@ -1,14 +1,16 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react-native";
-import Home from "@/app/index";
-
+// import Home from "@/app/index";
+import ButtonView from '@/components/button-view';
 describe("Home", () => {
   beforeEach(() => {
-    render(<Home />);
+    const {getByText} = render(<ButtonView />);
   });
   // afterEach(() => {});
   it("renders MPN Lookup Home view", () => {
+    const qtButton = screen.getByText("qt-button");
+    expect(qtButton).toBeDefined();
     // const header = screen.getByRole("heading", { name: /MPN Lookup/i });
     // expect(header).toBeInTheDocument();
     expect(1).toBe(1)
