@@ -14,8 +14,8 @@ import type { SvgProps } from 'react-native-svg';
 import Svg, { Path } from 'react-native-svg';
 import { tv } from 'tailwind-variants';
 
-import colors from '@/components/ui/colors';
-import { CaretDown } from '@/components/ui/icons';
+import colors from '@/ui/colors';
+import { CaretDown } from '@/ui/icons';
 
 import type { InputControllerType } from './input';
 import { useModal } from './modal';

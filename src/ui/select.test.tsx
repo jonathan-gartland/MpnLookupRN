@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { cleanup, render, screen, setup } from '@/core/test-utils';
-import type { OptionType } from '@/components/ui/index';
+import type { OptionType } from '@/ui/index';
 
 import { Select } from './select';
 
