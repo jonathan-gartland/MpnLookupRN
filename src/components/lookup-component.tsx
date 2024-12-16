@@ -55,13 +55,6 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
   const [inputQt2kL, setInputQt2kL] = useState(0);
   const [inputQt2kS, setInputQt2kS] = useState(0);
 
-  const handleChangeQt2kL = (text: string) => {
-    setInputQt2kL(Number(text));
-  };
-
-  const handleChangeQt2kS = (text: string) => {
-    setInputQt2kS(Number(text));
-  };
 
   const mpnVal = getMpn('qt2k', { large: inputQt2kL, small: inputQt2kS }) || [];
 
@@ -76,7 +69,7 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
             style={styles.input}
             keyboardType="numeric"
             value={String(inputQt2kL)}
-            onChangeText={handleChangeQt2kL}
+            onChangeText={(text) => setInputQt2kL(Number(text))}
           />
         </View>
         <View style={styles.inputWrapper}>
@@ -86,7 +79,7 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
             style={styles.input}
             keyboardType="numeric"
             value={String(inputQt2kS)}
-            onChangeText={handleChangeQt2kS}
+            onChangeText={(text) => setInputQt2kS(Number(text))}
           />
         </View>
       </View>
@@ -109,17 +102,7 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
 const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
   const [inputLL, setInputLL] = useState(0);
   const [inputLS, setInputLS] = useState(0);
-
-  const handleChangeLL = (text: string) => {
-    setInputLL(Number(text));
-  };
-
-  const handleChangeLS = (text: string) => {
-    setInputLS(Number(text));
-  };
-
   const mpnVal = getMpn('legio', { large: inputLL, small: inputLS }) || [];
-
   return (
     <View>
       <Heading title="Legiolert MPN" />
@@ -131,7 +114,7 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
             style={[styles.input, styles.inputQtl]}
             keyboardType="numeric"
             value={String(inputLL)}
-            onChangeText={handleChangeLL}
+            onChangeText={(text) => setInputLL(Number(text))}
           />
         </View>
         <View style={styles.inputWrapper}>
@@ -141,7 +124,7 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
             style={[styles.input, styles.inputQts]}
             keyboardType="numeric"
             value={String(inputLS)}
-            onChangeText={handleChangeLS}
+            onChangeText={(text) => setInputLS(Number(text))}
           />
         </View>
       </View>

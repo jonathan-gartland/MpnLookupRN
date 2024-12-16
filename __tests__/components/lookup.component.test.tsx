@@ -30,22 +30,24 @@ describe("LookupComponent", () => {
   });
   //
   it("renders Legiolert inputs and calculates MPN", () => {
-    // const { debug } =
+    const { debug } =
     render(<LookupComponent testtype="legio" />);
     // debug();
     const largeInput = screen.getByTestId(/legio-large/i);
     const smallInput = screen.getByTestId(/legio-small/i);
-    // debug(largeInput);
-    // debug(smallInput);
+
 
     fireEvent.changeText(largeInput, { target: { value: "2" } });
     fireEvent.changeText(smallInput, { target: { value: "5" } });
 
     // debug();
-
+    // debug(largeInput);
+    // debug(smallInput);
+    // debug();
     expect(screen.getByText(/MPN:/i)).toBeOnTheScreen();
     expect(screen.getByText(/Legiolert/i)).toBeOnTheScreen();
-    // expect(largeInput).toHaveProp("value", "2");
-    // expect(smallInput).toHaveProp("value", "5");
+
+    expect(largeInput).toBeOnTheScreen();
+    expect(smallInput).toBeOnTheScreen();
   });
 });
