@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Linking,
   ScrollView,
@@ -6,15 +6,15 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
+} from 'react-native';
 
-import LookupComponent from "./lookup-component";
+import LookupComponent from './lookup-component';
 
 const commonStyles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingVertical: 20,
   },
   text: {
@@ -22,36 +22,36 @@ const commonStyles = StyleSheet.create({
   },
   button: {
     marginVertical: 10,
-    borderStyle: "solid",
-    borderColor: "black",
+    borderStyle: 'solid',
+    borderColor: 'black',
     borderWidth: 2,
     height: 100,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 300,
     borderRadius: 20,
   },
   buttonText: {
-    textAlign: "center",
-    color: "#0A0A0A",
+    textAlign: 'center',
+    color: '#0A0A0A',
     fontSize: 24,
   },
   header: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 24,
     paddingBottom: 16,
     paddingTop: 16,
   },
   subHeader: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 20,
     paddingBottom: 16,
   },
   input: {
-    width: "50%",
+    width: '50%',
     fontSize: 24,
     padding: 8,
-    borderColor: "gray",
+    borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 4,
     marginHorizontal: 20,
@@ -68,8 +68,8 @@ const commonStyles = StyleSheet.create({
     paddingBottom: 8,
   },
   row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginHorizontal: 24,
   },
 });
@@ -78,22 +78,22 @@ const aboutStyles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    alignItems: "center",
+    alignItems: 'center',
   },
   instructions: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
   },
   title: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 18,
     borderBottomWidth: 2,
-    borderBottomColor: "black",
+    borderBottomColor: 'black',
     marginBottom: 10,
   },
   link: {
-    color: "blue",
-    textDecorationLine: "underline",
+    color: 'blue',
+    textDecorationLine: 'underline',
     marginTop: 10,
   },
 });
@@ -119,7 +119,7 @@ function About(): React.JSX.Element {
         <Text
           style={[aboutStyles.link, commonStyles.text]}
           onPress={() =>
-            Linking.openURL("https://www.npmjs.com/package/mpn-lookup")
+            Linking.openURL('https://www.npmjs.com/package/mpn-lookup')
           }
         >
           click here for more info
@@ -144,7 +144,7 @@ const ButtonView = () => {
   return (
     <>
       <View style={styles.top}>
-        <Text style={styles.topText}>MPN Lookup</Text>
+        <Text testID="mpnl-title" style={styles.topText}>MPN Lookup</Text>
         <Text style={styles.topTextSmall}>
           Built using Obytes Starter (create-obytes-app)
         </Text>
@@ -154,24 +154,28 @@ const ButtonView = () => {
           <View style={[commonStyles.container, styles.tc]}>
             <View>
               <TouchableOpacity
+                testID="qt-button"
                 onPress={() => setQtButton(true)}
                 style={commonStyles.button}
               >
                 <Text style={commonStyles.buttonText}>QuantiTray&reg;</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                testID="qt2k-button"
                 onPress={() => setQt2kButton(true)}
                 style={commonStyles.button}
               >
                 <Text style={commonStyles.buttonText}>QuantiTray&reg;2000</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                testID="qtl-button"
                 onPress={() => setLegioButton(true)}
                 style={commonStyles.button}
               >
                 <Text style={commonStyles.buttonText}>Legiolert</Text>
               </TouchableOpacity>
               <TouchableOpacity
+                testID="about-button"
                 onPress={() => setAboutButton(true)}
                 style={commonStyles.button}
               >
@@ -185,15 +189,15 @@ const ButtonView = () => {
             <View style={[commonStyles.container, styles.tc]}>
               {qtButton && (
                 <View style={[commonStyles.container, styles.cw]}>
-                  <LookupComponent testtype={"quanti"} />
+                  <LookupComponent testtype={'quanti'} />
                 </View>
               )}
               {qt2kButton && (
                 <View>
-                  <LookupComponent testtype={"quanti2k"} />
+                  <LookupComponent testtype={'quanti2k'} />
                 </View>
               )}
-              {legioButton && <LookupComponent testtype={"legio"} />}
+              {legioButton && <LookupComponent testtype={'legio'} />}
               {aboutButton && (
                 <View>
                   <About />
@@ -221,11 +225,11 @@ const styles = StyleSheet.create({
     height: 580,
   },
   cw: {
-    width: "100%",
+    width: '100%',
   },
   top: {
     paddingTop: 100,
-    alignItems: "center",
+    alignItems: 'center',
     paddingBottom: 60,
   },
   topText: {
