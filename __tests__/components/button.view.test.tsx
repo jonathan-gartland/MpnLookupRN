@@ -8,7 +8,6 @@ import { Text, TouchableOpacity } from 'react-native';
 describe('Home', () => {
 
   beforeEach(() => {
-    // const { getByText } = render(<ButtonView />);
     render(<ButtonView />);
   });
 
@@ -30,7 +29,9 @@ describe('Home', () => {
     expect(aboutButton).toBeOnTheScreen();
   });
 
-  it('onPressItem is called when pressed', () => {
+  it('onTouchableOpacityPress is called when pressed', () => {
+    // practice with mocks, if I had composed the components as standalone react
+    // components, I could test them using similar methods
     const onTouchableOpacityPressMock = jest.fn();
     const { getByTestId } = render(
       <TouchableOpacity
@@ -39,7 +40,6 @@ describe('Home', () => {
       >
         <Text>About</Text>
       </TouchableOpacity>);
-
     fireEvent.press(getByTestId('about-button'));
     expect(onTouchableOpacityPressMock).toHaveBeenCalledWith('about-button');
   });

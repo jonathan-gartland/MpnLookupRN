@@ -82,7 +82,7 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
         <View style={styles.inputWrapper}>
           <Text>Small</Text>
           <TextInput
-            testID={'qt2k-small'}
+            testID="qt2k-small"
             style={styles.input}
             keyboardType="numeric"
             value={String(inputQt2kS)}
@@ -127,6 +127,7 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
         <View style={styles.inputWrapper}>
           <Text style={styles.largeL}>Large</Text>
           <TextInput
+            testID="legio-large"
             style={[styles.input, styles.inputQtl]}
             keyboardType="numeric"
             value={String(inputLL)}
@@ -136,6 +137,7 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
         <View style={styles.inputWrapper}>
           <Text style={styles.smallL}>Small</Text>
           <TextInput
+            testID="legio-small"
             style={[styles.input, styles.inputQts]}
             keyboardType="numeric"
             value={String(inputLS)}
