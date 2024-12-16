@@ -71,6 +71,7 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
         <View style={styles.inputWrapper}>
           <Text>Large</Text>
           <TextInput
+            testID="qt2k-large"
             style={styles.input}
             keyboardType="numeric"
             value={String(inputQt2kL)}
@@ -80,6 +81,7 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
         <View style={styles.inputWrapper}>
           <Text>Small</Text>
           <TextInput
+            testID={"qt2k-small"}
             style={styles.input}
             keyboardType="numeric"
             value={String(inputQt2kS)}
