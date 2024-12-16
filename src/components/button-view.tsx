@@ -146,7 +146,7 @@ const ButtonView = () => {
       <View style={styles.top}>
         <Text style={styles.topText}>MPN Lookup</Text>
         <Text style={styles.topTextSmall}>
-          Built using Expo (create-expo-app)
+          Built using Obytes Starter (create-obytes-app)
         </Text>
       </View>
       <View id="top">
