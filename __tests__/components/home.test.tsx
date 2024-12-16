@@ -9,7 +9,7 @@ describe("Home", () => {
   });
   // afterEach(() => {});
   it("renders MPN Lookup Home view", () => {
-    const qtButton = screen.getByText("qt-button");
+    const qtButton = screen.getByTestId("qt-button");
     expect(qtButton).toBeDefined();
     // const header = screen.getByRole("heading", { name: /MPN Lookup/i });
     // expect(header).toBeInTheDocument();
