@@ -1,12 +1,12 @@
 import React from "react";
 import "@testing-library/jest-dom";
-// import { render, screen, fireEvent } from "@testing-library/react";
-// import LookupComponent from "@/components/lookup-component";
+import { render, screen, fireEvent } from "@testing-library/react-native";
+import LookupComponent from "@/components/lookup-component";
 
 describe("LookupComponent", () => {
   it("renders QuantiTray input and looks up MPN", () => {
-    // render(<LookupComponent testtype="quanti" />);
-    // const header = screen.getByRole("heading", { name: /MPN : < 1.0/i });
+    render(<LookupComponent testtype="quanti" />);
+    const header = screen.getByText(/MPN:\s*< 1.0/i);
     // expect(header).toBeInTheDocument();
     // expect(header).toHaveTextContent("MPN : < 1");
     expect(1).toBe(1);
