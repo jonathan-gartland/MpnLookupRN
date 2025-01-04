@@ -1,6 +1,6 @@
 <h1 align="center">
   <img alt="logo" src="./assets/icon.png" width="124px" style="border-radius:10px"/><br/>
-MPN Lookup</h1>
+MPN Lookup RN using Expo</h1>
 
 > This Project is based on [Obytes starter](https://starter.obytes.com)
 
