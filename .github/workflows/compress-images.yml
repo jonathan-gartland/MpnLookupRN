@@ -12,7 +12,7 @@ name: Compress images
 on:
   push:
     branches:
-      - master
+      - development
       - main
     paths:
       - '**.jpg'
