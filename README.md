@@ -2,7 +2,7 @@
   <img alt="logo" src="./assets/icon.png" width="124px" style="border-radius:10px"/><br/>
 MPN Lookup RN using Expo</h1>
 
-> This Project is based on [Obytes starter](https://starter.obytes.com) and [Mpn Lookup NextJS](https://github.com/jonathan-gartland/mpn-lookup-nextjs)  
+> This Project is based on [Obytes starter](https://starter.obytes.com) and [Mpn Lookup NextJS](https://github.com/jonathan-gartland/mpn-lookup-nextjs) the documentation here is all boilerplate Obytes stuff, anything relevant to the mpn lookup app is explained in the aforementioned project.  
 
 ## Requirements
 
