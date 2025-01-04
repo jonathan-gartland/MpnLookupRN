@@ -2,7 +2,7 @@
   <img alt="logo" src="./assets/icon.png" width="124px" style="border-radius:10px"/><br/>
 MPN Lookup RN using Expo</h1>
 
-> This Project is based on [Obytes starter](https://starter.obytes.com)
+> This Project is based on [Obytes starter](https://starter.obytes.com) and [Mpn Lookup NextJS](https://github.com/jonathan-gartland/mpn-lookup-nextjs)  
 
 ## Requirements
 
@@ -18,9 +18,9 @@ MPN Lookup RN using Expo</h1>
 Clone the repo to your machine and install deps :
 
 ```sh
-git clone https://github.com/user/repo-name
+git clone https://github.com/jonathan-gartland/MpnLookupRN
 
-cd ./repo-name
+cd ./MpnLookupRN  
 
 pnpm install
 ```
