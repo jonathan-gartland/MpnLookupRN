@@ -47,3 +47,10 @@ pnpm android
 - [Forms](https://starter.obytes.com/ui-and-theme/Forms)
 - [Data fetching](https://starter.obytes.com/guides/data-fetching)
 - [Contribute to starter](https://starter.obytes.com/how-to-contribute/)
+
+----  
+# License
+
+This application is released under the [MIT license](LICENSE). You can use the code for any purpose, including commercial projects.
+
+[![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
