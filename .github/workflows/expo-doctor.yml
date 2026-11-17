@@ -46,7 +46,10 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm-install
 
       - name: Run prebuild
-        run: pnpm run prebuild
+        run: |
+          # app-icon-badge writes badged icons asynchronously; generate them before prebuild reads them
+          pnpm expo config --type public > /dev/null
+          pnpm run prebuild
 
       - name: 🚑 Run Doctor Checks
         run: |

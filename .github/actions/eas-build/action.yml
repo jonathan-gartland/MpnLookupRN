@@ -71,7 +71,10 @@ runs:
         token: ${{ inputs.EXPO_TOKEN }}
 
     - name: ⚙️ Run Prebuild
-      run: pnpm prebuild:${{ inputs.APP_ENV }}
+      run: |
+        # app-icon-badge writes badged icons asynchronously; generate them before prebuild reads them
+        APP_ENV=${{ inputs.APP_ENV }} pnpm expo config --type public > /dev/null
+        pnpm prebuild:${{ inputs.APP_ENV }}
       shell: bash
 
     - name: 📱 Run Android Build

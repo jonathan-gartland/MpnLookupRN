@@ -45,6 +45,8 @@ runs:
 
     - name: Generate Test APK
       run: |
+        # app-icon-badge writes badged icons asynchronously; generate them before prebuild reads them
+        pnpm expo config --type public > /dev/null
         pnpm prebuild:${{ inputs.APP_ENV }} --platform android
         cd android
         chmod +x ./gradlew
