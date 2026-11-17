@@ -1,35 +1,43 @@
-# 🔗 Links:
-# Source file: https://github.com/obytes/react-native-template-obytes/blob/master/.github/workflows/e2e-android.yml
-# End-to-end testing: https://starter.obytes.com/testing/end-to-end-testing/
-
 # ✍️ Description:
-# This workflow is used to run end-to-end tests on Android using Maestro.
-# As a first step, it will generate a test APK using the Gradle build and then upload it as an artifact.
-# A new job will be started to run the tests using the test APK generated in the previous job.
-# To test the app, we set up an Android emulator using the `reactivecircus/android-emulator-runner` action. This runner requires macOS as the operating system for the runner.
-# This workflow will be triggered on pull requests (PRs) with the label "android-test-github" or can be manually triggered from the Actions tab.
+# Runs the Maestro end-to-end tests in .maestro/ on an Android emulator inside GitHub Actions.
+# 1. Builds a staging release APK (JS bundled in, so no Metro server is needed).
+# 2. Boots an x86_64 emulator on a Linux runner (hardware accelerated via KVM).
+# 3. Installs the APK and runs `maestro test .maestro`.
 #
-
+# Triggers:
+#   - Pushes to main
+#   - Pull requests to main that carry the `e2e-android` label (add the label to run it)
+#   - Manually from the Actions tab
+#
 # 🚨 GITHUB SECRETS REQUIRED: None
 
-name: E2E Tests Android (Maestro + Github Action)
+name: E2E Tests Android (Maestro)
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
+    types: [opened, synchronize, reopened, labeled]
+
+concurrency:
+  group: e2e-android-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  API_LEVEL: 34
 
 jobs:
-  generate-test-apk:
-    if: github.event_name != 'pull_request' || ( github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'android-test-github'))
-    name: Generate Test APK (Gradle)
+  e2e-android:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'e2e-android')
+    name: Build APK + Run Maestro (Android emulator)
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     steps:
       - name: 📦 Checkout project repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v4
 
       - name: 📦 Setup Node + PNPM + install deps
         uses: ./.github/actions/setup-node-pnpm-install
@@ -38,82 +46,60 @@ jobs:
         uses: ./.github/actions/setup-jdk-generate-apk
         with:
           APP_ENV: staging
+          ARCHITECTURES: x86_64
 
-      - name: Upload Test APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-apk
-          path: ./android/app/build/outputs/apk/release/app-release.apk
-
-  test-android:
-    name: Run Android E2E Tests (Maestro + Github Action)
-    needs: generate-test-apk
-    runs-on: macOS-latest
-
-    steps:
-      - name: 📦 Checkout project repo
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      - name: ⚡ Enable KVM for the emulator
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
 
       - name: 📦 Install Maestro
-        run: npm run install-maestro ## We use npm because we don't need to install deps again
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
 
-      - name: Download Test APK
-        uses: actions/download-artifact@v3
-        with:
-          name: test-apk
-          path: ${{ github.workspace }}
-
-      - name: Gradle cache
-        uses: gradle/gradle-build-action@v2
-
-      - name: AVD cache
-        uses: actions/cache@v3
+      - name: 💾 AVD cache
+        uses: actions/cache@v4
         id: avd-cache
         with:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-cache
+          key: avd-${{ env.API_LEVEL }}-x86_64
 
-      - name: create AVD and generate snapshot for caching
+      - name: 📱 Create AVD snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
+          api-level: ${{ env.API_LEVEL }}
+          arch: x86_64
+          target: google_apis
           force-avd-creation: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: false
-          cores: 2
-          ram-size: 4096M
-          profile: Nexus 6
+          disable-animations: true
           script: echo "Generated AVD snapshot for caching."
 
-      - name: Run tests with Maestro
+      - name: 🧪 Run Maestro tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
+          api-level: ${{ env.API_LEVEL }}
+          arch: x86_64
+          target: google_apis
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: false
-          cores: 2
-          ram-size: 4096M
-          profile: Nexus 6
+          disable-animations: true
           script: |
-            adb install "${{ github.workspace }}/app-release.apk"
-            $HOME/.maestro/bin/maestro test .maestro/ --env=APP_ID=com.obytes.staging  --format junit
+            adb install ./android/app/build/outputs/apk/release/app-release.apk
+            maestro test .maestro --env APP_ID=com.mpnlookuprn.staging --format junit --output maestro-report.xml --debug-output maestro-output
 
-      - name: Upload artifacts
+      - name: 📤 Upload Maestro report, screenshots and logs
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: e2e-test-logs
-          path: ~/.maestro/tests/**/*
-
-      - name: Store tests result
-        uses: actions/upload-artifact@v3
-        with:
-          name: e2e_android_report
+          name: e2e-android-results
           path: |
-            report.xml
+            maestro-report.xml
+            maestro-output/
+            ~/.maestro/tests/
+          if-no-files-found: ignore

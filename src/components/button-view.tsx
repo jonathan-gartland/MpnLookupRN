@@ -206,6 +206,7 @@ const ButtonView = () => {
             </View>
             <View style={[commonStyles.container, styles.bottom]}>
               <TouchableOpacity
+                testID="back-button"
                 onPress={() => resetState()}
                 style={commonStyles.button}
               >

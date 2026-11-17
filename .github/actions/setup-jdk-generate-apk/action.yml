@@ -5,9 +5,14 @@
 # ✍️ Description:
 # This is a composite action, which means it can be used in other actions.
 # This action is used to set up the JDK environment and generate an Android APK for testing.
-# This action accepts one input: `APP_ENV`, which is used to generate an APK for a specific environment (development, staging, production). We use staging by default.
+# Inputs:
+#   `APP_ENV`: environment to build (development, staging, production). Staging by default.
+#   `ARCHITECTURES`: optional comma-separated CPU ABIs (e.g. x86_64 for the CI emulator). Empty builds all ABIs.
 # Before generating the APK, we run a pre-build script to generate the necessary native folders based on the APP_ENV.
 # On success, the APK is generated at `./android/app/build/outputs/apk/release/app-release.apk`.
+#
+# env.js requires API_URL, VAR_NUMBER, VAR_BOOL and SECRET_KEY. The app code doesn't use them yet,
+# and .env.* files are gitignored, so CI supplies placeholders. Real values belong in repo secrets.
 
 # 👀 Example usage:
 #       - name : 📦 Set Up JDK + Generate Test APK
@@ -22,27 +27,41 @@ inputs:
     description: 'APP_ENV (one of): development, staging, production'
     required: true
     default: 'staging'
+  ARCHITECTURES:
+    description: 'Comma-separated ABIs to build (e.g. x86_64). Empty = all.'
+    required: false
+    default: ''
 
 runs:
   using: 'composite'
   steps:
     - name: Set Up JDK
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'zulu' # See 'Supported distributions' for available options
         java-version: '17'
     - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
+      uses: gradle/actions/setup-gradle@v4
 
     - name: Generate Test APK
       run: |
-        pnpm prebuild:${{ inputs.APP_ENV }}
-        cd  android
+        pnpm prebuild:${{ inputs.APP_ENV }} --platform android
+        cd android
         chmod +x ./gradlew
-        ./gradlew assembleRelease --no-daemon
+        ARCH_FLAG=""
+        if [ -n "${{ inputs.ARCHITECTURES }}" ]; then
+          ARCH_FLAG="-PreactNativeArchitectures=${{ inputs.ARCHITECTURES }}"
+        fi
+        ./gradlew assembleRelease --no-daemon $ARCH_FLAG
         cd ..
       shell: bash
       env:
         EXPO_NO_DOTENV: '1'
         APP_ENV: ${{ inputs.APP_ENV }}
         CI: 'true'
+        # No Sentry auth token in CI: skip source map / debug symbol uploads.
+        SENTRY_DISABLE_AUTO_UPLOAD: 'true'
+        API_URL: ${{ env.API_URL || 'https://example.com' }}
+        VAR_NUMBER: ${{ env.VAR_NUMBER || '0' }}
+        VAR_BOOL: ${{ env.VAR_BOOL || 'false' }}
+        SECRET_KEY: ${{ env.SECRET_KEY || 'ci-placeholder' }}

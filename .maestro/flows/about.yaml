@@ -1,0 +1,13 @@
+appId: ${APP_ID}
+name: About screen explains how to use the app
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: about-button
+- assertVisible: How to use the App
+- assertVisible: click here for more info
+- tapOn:
+    id: back-button
+- assertVisible:
+    id: about-button
