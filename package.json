@@ -151,5 +151,11 @@
   },
   "osMetadata": {
     "initVersion": "7.0.2"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "expo-localization@16.0.0": "patches/expo-localization@16.0.0.patch",
+      "expo-dev-menu@6.0.10": "patches/expo-dev-menu@6.0.10.patch"
+    }
   }
 }
