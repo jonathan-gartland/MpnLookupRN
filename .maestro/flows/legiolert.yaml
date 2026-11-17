@@ -1,0 +1,21 @@
+appId: ${APP_ID}
+name: Legiolert lookup uses large and small wells
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: qtl-button
+- assertVisible: Legiolert MPN
+# 5 large + 5 small positive wells -> 19.4
+- tapOn:
+    id: legio-large
+- eraseText
+- inputText: '5'
+- tapOn:
+    id: legio-small
+- eraseText
+- inputText: '5'
+- hideKeyboard
+- assertVisible:
+    id: legio-mpn-number
+    text: 'MPN: 19\.4'

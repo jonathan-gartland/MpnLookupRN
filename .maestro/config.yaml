@@ -1,12 +1,4 @@
+# Maestro workspace config: https://docs.maestro.dev/api-reference/configuration/workspace-configuration
+# Run locally with: maestro test .maestro --env APP_ID=com.mpnlookuprn.development
 flows:
-  - auth/*
-  - app/*
-
-excludeTags:
-  - util
-
-executionOrder:
-    continueOnFailure: false # default is true
-    flowsOrder:
-        - onboarding
-        - login-with-validation
+  - flows/*

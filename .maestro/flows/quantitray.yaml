@@ -1,0 +1,31 @@
+appId: ${APP_ID}
+name: QuantiTray lookup shows MPN and confidence range
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    id: qt-button
+- assertVisible: QuantiTray® MPN
+# 0 positive wells
+- assertVisible:
+    id: qt-mpn-number
+    text: 'MPN: <1\.0'
+# 10 positive wells -> 11.1 (6.1 - 20.5)
+- tapOn:
+    id: qt-input
+- eraseText
+- inputText: '10'
+- hideKeyboard
+- assertVisible:
+    id: qt-mpn-number
+    text: 'MPN: 11\.1'
+- assertVisible: 'Low: 6\.1'
+- assertVisible: 'High: 20\.5'
+- scrollUntilVisible:
+    element:
+      id: back-button
+    direction: DOWN
+- tapOn:
+    id: back-button
+- assertVisible:
+    id: qt-button

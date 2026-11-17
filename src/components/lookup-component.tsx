@@ -30,6 +30,7 @@ const QtDiv: React.FC<MyComponentProps> = ({ testtype }) => {
     <View>
       <Heading title="QuantiTray® MPN" />
       <TextInput
+        testID="qt-input"
         style={[styles.input, styles.inputQt]}
         keyboardType="numeric"
         value={String(inputQt)}
@@ -85,7 +86,12 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
       </View>
       {testtype === 'quanti2k' && mpnVal.length > 0 && (
         <View>
-          <Text style={[styles.result, styles.qt2kmpn]}>MPN: {mpnVal[0]}</Text>
+          <Text
+            testID="qt2k-mpn-number"
+            style={[styles.result, styles.qt2kmpn]}
+          >
+            MPN: {mpnVal[0]}
+          </Text>
           <Text style={[styles.confidence, styles.qt2kmpn]}>
             95% Confidence
           </Text>
@@ -130,7 +136,9 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
       </View>
       {testtype === 'legio' && (
         <View>
-          <Text style={styles.result}>MPN: {mpnVal}</Text>
+          <Text testID="legio-mpn-number" style={styles.result}>
+            MPN: {mpnVal}
+          </Text>
         </View>
       )}
     </View>

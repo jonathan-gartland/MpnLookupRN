@@ -1,0 +1,16 @@
+appId: ${APP_ID}
+name: Home screen shows every test type
+---
+- launchApp:
+    clearState: true
+- assertVisible:
+    id: mpnl-title
+    text: MPN Lookup
+- assertVisible:
+    id: qt-button
+- assertVisible:
+    id: qt2k-button
+- assertVisible:
+    id: qtl-button
+- assertVisible:
+    id: about-button
