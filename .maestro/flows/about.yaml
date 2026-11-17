@@ -7,6 +7,10 @@ name: About screen explains how to use the app
     id: about-button
 - assertVisible: How to use the App
 - assertVisible: click here for more info
+- scrollUntilVisible:
+    element:
+      id: back-button
+    direction: DOWN
 - tapOn:
     id: back-button
 - assertVisible:

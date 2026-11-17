@@ -23,6 +23,8 @@ on:
 
 env:
   API_LEVEL: 34
+  EMULATOR_PROFILE: pixel_6
+  MAESTRO_VERSION: 2.12.1
   APK_URL: ${{ github.event.inputs.apk-url }}
   APP_ID: ${{ github.event.inputs.app-id }}
 
@@ -48,6 +50,7 @@ jobs:
 
       - name: 📦 Install Maestro
         run: |
+          # MAESTRO_VERSION (set above) pins the CLI version the install script fetches
           curl -Ls "https://get.maestro.mobile.dev" | bash
           echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
 
@@ -58,7 +61,7 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-${{ env.API_LEVEL }}-x86_64
+          key: avd-${{ env.API_LEVEL }}-x86_64-${{ env.EMULATOR_PROFILE }}
 
       - name: 📱 Create AVD snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
@@ -67,6 +70,7 @@ jobs:
           api-level: ${{ env.API_LEVEL }}
           arch: x86_64
           target: google_apis
+          profile: ${{ env.EMULATOR_PROFILE }}
           force-avd-creation: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
@@ -78,12 +82,13 @@ jobs:
           api-level: ${{ env.API_LEVEL }}
           arch: x86_64
           target: google_apis
+          profile: ${{ env.EMULATOR_PROFILE }}
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
             adb install ./app-release.apk
-            maestro test .maestro --env APP_ID="$APP_ID" --format junit --output maestro-report.xml --debug-output maestro-output
+            maestro test .maestro --env APP_ID="$APP_ID" --format junit --output maestro-report.xml --test-output-dir maestro-output
 
       - name: 📤 Upload Maestro report, screenshots and logs
         if: always()
@@ -93,5 +98,4 @@ jobs:
           path: |
             maestro-report.xml
             maestro-output/
-            ~/.maestro/tests/
           if-no-files-found: ignore

@@ -21,6 +21,10 @@ name: QuantiTray lookup shows MPN and confidence range
     text: 'MPN: 11\.1'
 - assertVisible: 'Low: 6\.1'
 - assertVisible: 'High: 20\.5'
+- scrollUntilVisible:
+    element:
+      id: back-button
+    direction: DOWN
 - tapOn:
     id: back-button
 - assertVisible:

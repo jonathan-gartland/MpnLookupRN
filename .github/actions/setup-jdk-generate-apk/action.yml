@@ -45,8 +45,6 @@ runs:
 
     - name: Generate Test APK
       run: |
-        # app-icon-badge writes badged icons asynchronously; generate them before prebuild reads them
-        pnpm expo config --type public > /dev/null
         pnpm prebuild:${{ inputs.APP_ENV }} --platform android
         cd android
         chmod +x ./gradlew
@@ -63,6 +61,8 @@ runs:
         CI: 'true'
         # No Sentry auth token in CI: skip source map / debug symbol uploads.
         SENTRY_DISABLE_AUTO_UPLOAD: 'true'
+        # Skip app-icon-badge (racy on fresh checkouts; badges aren't needed for tests).
+        DISABLE_ICON_BADGE: 'true'
         API_URL: ${{ env.API_URL || 'https://example.com' }}
         VAR_NUMBER: ${{ env.VAR_NUMBER || '0' }}
         VAR_BOOL: ${{ env.VAR_BOOL || 'false' }}

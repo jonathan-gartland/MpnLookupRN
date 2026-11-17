@@ -35,6 +35,8 @@ jobs:
       VAR_NUMBER: '0'
       VAR_BOOL: 'false'
       SECRET_KEY: ci-placeholder
+      # Skip app-icon-badge (racy on fresh checkouts; badges aren't needed here).
+      DISABLE_ICON_BADGE: 'true'
 
     steps:
       - name: 📦 Checkout project repo
@@ -46,10 +48,7 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm-install
 
       - name: Run prebuild
-        run: |
-          # app-icon-badge writes badged icons asynchronously; generate them before prebuild reads them
-          pnpm expo config --type public > /dev/null
-          pnpm run prebuild
+        run: pnpm run prebuild
 
       - name: 🚑 Run Doctor Checks
         run: |

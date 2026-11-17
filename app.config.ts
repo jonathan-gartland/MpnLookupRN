@@ -5,7 +5,10 @@ import type { AppIconBadgeConfig } from 'app-icon-badge/types';
 import { ClientEnv, Env } from './env';
 
 const appIconBadgeConfig: AppIconBadgeConfig = {
-  enabled: Env.APP_ENV !== 'production',
+  // CI sets DISABLE_ICON_BADGE: the plugin writes badged icons without awaiting
+  // the write, so a parallel read during prebuild can hit a half-written file.
+  enabled:
+    Env.APP_ENV !== 'production' && process.env.DISABLE_ICON_BADGE !== 'true',
   badges: [
     {
       text: Env.APP_ENV,
