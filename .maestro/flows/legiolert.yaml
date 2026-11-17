@@ -15,7 +15,8 @@ name: Legiolert lookup uses large and small wells
     id: legio-small
 - eraseText
 - inputText: '5'
-- hideKeyboard
+# Tap outside the inputs to close the keyboard (works on iOS and Android)
+- tapOn: Positive Wells
 - assertVisible:
     id: legio-mpn-number
-    text: 'MPN: 19\.4'
+- assertVisible: 'MPN: 19\.4'

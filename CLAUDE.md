@@ -70,3 +70,8 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
 - Xcode 27 renamed Simulator to DeviceHub. Expo CLI (SDK 52) can't find it, so `pnpm ios` fails.
   Workaround: `pnpm start`, then `pnpm xcode` and Run from Xcode.
 - Xcode 27 requires pod deployment targets ≥ iOS 15; `plugins/with-ios-pods-deployment-target.js` handles it.
+- The iOS 27 SDK breaks Swift in two SDK 52 packages. `patches/` fixes them through pnpm
+  `patchedDependencies` (expo-localization: non-exhaustive calendar switch; expo-dev-menu:
+  `TARGET_IPHONE_SIMULATOR`). Drop the patches when the Expo upgrade brings fixed versions.
+- Maestro on iOS can't match `id` and `text` in one selector (React Native nests the text in a
+  child element). Assert them separately. Don't use `hideKeyboard`; tap outside the inputs instead.

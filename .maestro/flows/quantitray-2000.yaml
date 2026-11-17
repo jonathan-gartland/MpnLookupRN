@@ -15,9 +15,10 @@ name: QuantiTray 2000 lookup uses large and small wells
     id: qt2k-small
 - eraseText
 - inputText: '5'
-- hideKeyboard
+# Tap outside the inputs to close the keyboard (works on iOS and Android)
+- tapOn: Positive Wells
 - assertVisible:
     id: qt2k-mpn-number
-    text: 'MPN: 16\.6'
+- assertVisible: 'MPN: 16\.6'
 - assertVisible: 'Low: 9\.6'
 - assertVisible: 'High: 26\.8'

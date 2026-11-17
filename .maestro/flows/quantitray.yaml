@@ -9,18 +9,31 @@ name: QuantiTray lookup shows MPN and confidence range
 # 0 positive wells
 - assertVisible:
     id: qt-mpn-number
-    text: 'MPN: <1\.0'
+- assertVisible: 'MPN: <1\.0'
 # 10 positive wells -> 11.1 (6.1 - 20.5)
 - tapOn:
     id: qt-input
 - eraseText
 - inputText: '10'
-- hideKeyboard
+# Tap outside the inputs to close the keyboard (works on iOS and Android)
+- tapOn: Positive Wells
 - assertVisible:
     id: qt-mpn-number
-    text: 'MPN: 11\.1'
+- assertVisible: 'MPN: 11\.1'
 - assertVisible: 'Low: 6\.1'
 - assertVisible: 'High: 20\.5'
+# iOS: the number pad has no return key, so the Done bar above it closes the keyboard
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          id: qt-input
+      - tapOn:
+          id: keyboard-done
+      - assertNotVisible:
+          id: keyboard-done
+      - assertVisible: 'MPN: 11\.1'
 - scrollUntilVisible:
     element:
       id: back-button

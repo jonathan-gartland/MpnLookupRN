@@ -5,7 +5,7 @@ name: Home screen shows every test type
     clearState: true
 - assertVisible:
     id: mpnl-title
-    text: MPN Lookup
+- assertVisible: MPN Lookup
 - assertVisible:
     id: qt-button
 - assertVisible:
