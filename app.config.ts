@@ -72,7 +72,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     'expo-localization',
     'expo-router',
     ['app-icon-badge', appIconBadgeConfig],
-    ["react-native-edge-to-edge"]
+    ['react-native-edge-to-edge'],
+    [
+      '@sentry/react-native/expo',
+      {
+        url: 'https://sentry.io/',
+        project: 'mpnlookuprn',
+        organization: 'jonathan-gartland',
+      },
+    ],
+    './plugins/with-ios-pods-deployment-target.js',
   ],
   extra: {
     ...ClientEnv,
