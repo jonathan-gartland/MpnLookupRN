@@ -1,6 +1,7 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react-native";
+import { Keyboard } from "react-native";
 import LookupComponent from "@/components/lookup-component";
 
 describe("LookupComponent", () => {
@@ -49,5 +50,39 @@ describe("LookupComponent", () => {
 
     expect(largeInput).toBeOnTheScreen();
     expect(smallInput).toBeOnTheScreen();
+  });
+});
+
+describe("LookupComponent keyboard handling", () => {
+  let dismissSpy: jest.SpyInstance;
+
+  beforeEach(() => {
+    dismissSpy = jest.spyOn(Keyboard, "dismiss").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    dismissSpy.mockRestore();
+  });
+
+  it("selects the current count on focus so typing replaces it", () => {
+    render(<LookupComponent testtype="quanti2k" />);
+    for (const id of ["qt2k-large", "qt2k-small"]) {
+      expect(screen.getByTestId(id).props.selectTextOnFocus).toBe(true);
+    }
+  });
+
+  it("shows a Done bar above the iOS number pad that closes the keyboard", () => {
+    render(<LookupComponent testtype="quanti" />);
+    expect(screen.getByTestId("qt-input").props.inputAccessoryViewID).toBe(
+      "mpn-keyboard-done"
+    );
+    fireEvent.press(screen.getByTestId("keyboard-done"));
+    expect(dismissSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it("closes the keyboard when tapping outside the inputs", () => {
+    render(<LookupComponent testtype="legio" />);
+    fireEvent.press(screen.getByTestId("lookup-area"));
+    expect(dismissSpy).toHaveBeenCalledTimes(1);
   });
 });

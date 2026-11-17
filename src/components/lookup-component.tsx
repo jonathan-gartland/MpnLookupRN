@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  InputAccessoryView,
+  Keyboard,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  type TextInputProps,
+  View,
+} from 'react-native';
 
 import { getMpn } from '@/util/mpn.lookup';
+
+// The iOS number pad has no return key, so a "Done" bar above it closes the keyboard
+const KEYBOARD_DONE_ID = 'mpn-keyboard-done';
 
 interface MyComponentProps {
   testtype: string;
@@ -10,6 +23,33 @@ interface MyComponentProps {
 interface HeadingProps {
   title: string;
 }
+
+// selectTextOnFocus: typing replaces the current count instead of inserting
+// next to it (tapping "0" and typing 10 would otherwise give 100 or 010)
+const NumberInput: React.FC<TextInputProps> = (props) => (
+  <TextInput
+    keyboardType="numeric"
+    selectTextOnFocus
+    inputAccessoryViewID={Platform.OS === 'ios' ? KEYBOARD_DONE_ID : undefined}
+    {...props}
+  />
+);
+
+const KeyboardDoneBar: React.FC = () =>
+  Platform.OS === 'ios' ? (
+    <InputAccessoryView nativeID={KEYBOARD_DONE_ID}>
+      <View style={styles.doneBar}>
+        <Pressable
+          testID="keyboard-done"
+          accessibilityRole="button"
+          onPress={Keyboard.dismiss}
+          hitSlop={8}
+        >
+          <Text style={styles.doneText}>Done</Text>
+        </Pressable>
+      </View>
+    </InputAccessoryView>
+  ) : null;
 
 const Heading: React.FC<HeadingProps> = ({ title }) => {
   return (
@@ -29,10 +69,9 @@ const QtDiv: React.FC<MyComponentProps> = ({ testtype }) => {
   return (
     <View>
       <Heading title="QuantiTray® MPN" />
-      <TextInput
+      <NumberInput
         testID="qt-input"
         style={[styles.input, styles.inputQt]}
-        keyboardType="numeric"
         value={String(inputQt)}
         onChangeText={handleChangeQt}
       />
@@ -65,20 +104,18 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
       <View style={styles.inputContainer}>
         <View style={styles.inputWrapper}>
           <Text>Large</Text>
-          <TextInput
+          <NumberInput
             testID="qt2k-large"
             style={styles.input}
-            keyboardType="numeric"
             value={String(inputQt2kL)}
             onChangeText={(text) => setInputQt2kL(Number(text))}
           />
         </View>
         <View style={styles.inputWrapper}>
           <Text>Small</Text>
-          <TextInput
+          <NumberInput
             testID="qt2k-small"
             style={styles.input}
-            keyboardType="numeric"
             value={String(inputQt2kS)}
             onChangeText={(text) => setInputQt2kS(Number(text))}
           />
@@ -115,20 +152,18 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
       <View style={styles.inputContainer}>
         <View style={styles.inputWrapper}>
           <Text style={styles.largeL}>Large</Text>
-          <TextInput
+          <NumberInput
             testID="legio-large"
             style={[styles.input, styles.inputQtl]}
-            keyboardType="numeric"
             value={String(inputLL)}
             onChangeText={(text) => setInputLL(Number(text))}
           />
         </View>
         <View style={styles.inputWrapper}>
           <Text style={styles.smallL}>Small</Text>
-          <TextInput
+          <NumberInput
             testID="legio-small"
             style={[styles.input, styles.inputQts]}
-            keyboardType="numeric"
             value={String(inputLS)}
             onChangeText={(text) => setInputLS(Number(text))}
           />
@@ -145,12 +180,19 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
   );
 };
 const LookupComponent: React.FC<MyComponentProps> = ({ testtype }) => {
+  // Tapping anywhere outside the inputs closes the keyboard. accessible={false}
+  // keeps screen readers (and Maestro on iOS) seeing the individual elements.
   return (
-    <View>
+    <Pressable
+      testID="lookup-area"
+      accessible={false}
+      onPress={Keyboard.dismiss}
+    >
       {testtype === 'quanti' && <QtDiv testtype="quanti" />}
       {testtype === 'quanti2k' && <Qt2kDiv testtype="quanti2k" />}
       {testtype === 'legio' && <QtLDiv testtype="legio" />}
-    </View>
+      <KeyboardDoneBar />
+    </Pressable>
   );
 };
 
@@ -222,6 +264,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 24,
+  },
+  doneBar: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: '#f1f1f1',
+    borderTopColor: '#ccc',
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  doneText: {
+    fontSize: 17,
+    fontWeight: '600',
+    color: '#007aff',
   },
 });
 
