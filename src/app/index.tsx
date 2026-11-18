@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { SafeAreaView, ScrollView, useColorScheme } from 'react-native';
 
 import ButtonView from '@/components/button-view';

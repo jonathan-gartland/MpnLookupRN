@@ -38,7 +38,8 @@ use `app.config.ts` or a config plugin in `plugins/` so changes survive `prebuil
 pnpm start                 # Metro dev server
 pnpm ios / pnpm android    # Native dev build and run
 pnpm prebuild --clean      # Regenerate ios/ and android/
-pnpm lint                  # ESLint
+pnpm lint                  # ESLint (also enforces formatting)
+pnpm lint:fix              # ESLint auto-fix, including formatting
 pnpm type-check            # tsc --noEmit
 pnpm test                  # Jest
 pnpm check-all             # lint + type-check + translations lint + test
@@ -62,6 +63,8 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
 
 ## Conventions
 
+- Formatting is ESLint Stylistic via `@antfu/eslint-config` (`eslint.config.mjs`), as in the
+  Obytes v9 template. There is no Prettier; run `pnpm lint:fix` instead.
 - Conventional Commits (commitlint), e.g. `feat:`, `fix:`, `chore:`, `ci:`, `test:`.
 - No direct commits to main; the pre-commit hook blocks it and runs type-check, lint-staged and Jest.
 - Prefer existing Obytes patterns when adding features, so later template upgrades stay easy.

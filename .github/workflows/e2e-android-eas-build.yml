@@ -12,14 +12,14 @@ on:
     inputs:
       apk-url:
         type: string
-        description: 'EAS APK URL'
+        description: EAS APK URL
         required: true
         default: ''
       app-id:
         type: string
-        description: 'Android package of the build (e.g. com.mpnlookuprn.staging)'
+        description: Android package of the build (e.g. com.mpnlookuprn.staging)
         required: true
-        default: 'com.mpnlookuprn.staging'
+        default: com.mpnlookuprn.staging
 
 env:
   API_LEVEL: 34

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import {
   Linking,
   ScrollView,
@@ -119,8 +120,7 @@ function About(): React.JSX.Element {
         <Text
           style={[aboutStyles.link, commonStyles.text]}
           onPress={() =>
-            Linking.openURL('https://www.npmjs.com/package/mpn-lookup')
-          }
+            Linking.openURL('https://www.npmjs.com/package/mpn-lookup')}
         >
           click here for more info
         </Text>
@@ -129,8 +129,7 @@ function About(): React.JSX.Element {
   );
 }
 
-/* eslint-disable max-lines-per-function */
-const ButtonView = () => {
+function ButtonView() {
   const [qtButton, setQtButton] = useState<boolean>(false);
   const [qt2kButton, setQt2kButton] = useState<boolean>(false);
   const [legioButton, setLegioButton] = useState<boolean>(false);
@@ -189,15 +188,15 @@ const ButtonView = () => {
             <View style={[commonStyles.container, styles.tc]}>
               {qtButton && (
                 <View style={[commonStyles.container, styles.cw]}>
-                  <LookupComponent testtype={'quanti'} />
+                  <LookupComponent testtype="quanti" />
                 </View>
               )}
               {qt2kButton && (
                 <View>
-                  <LookupComponent testtype={'quanti2k'} />
+                  <LookupComponent testtype="quanti2k" />
                 </View>
               )}
-              {legioButton && <LookupComponent testtype={'legio'} />}
+              {legioButton && <LookupComponent testtype="legio" />}
               {aboutButton && (
                 <View>
                   <About />
@@ -218,8 +217,8 @@ const ButtonView = () => {
       </View>
     </>
   );
-};
-/* eslint-enable max-lines-per-function */
+}
+
 const styles = StyleSheet.create({
   tc: {
     width: 412,

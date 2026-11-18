@@ -86,3 +86,22 @@ describe("LookupComponent keyboard handling", () => {
     expect(dismissSpy).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("LookupComponent result labels", () => {
+  it("shows QuantiTray MPN and confidence range with a space after each label", () => {
+    render(<LookupComponent testtype="quanti" />);
+    fireEvent.changeText(screen.getByTestId("qt-input"), "10");
+    expect(screen.getByText("MPN: 11.1")).toBeOnTheScreen();
+    expect(screen.getByText("Low: 6.1")).toBeOnTheScreen();
+    expect(screen.getByText("High: 20.5")).toBeOnTheScreen();
+  });
+
+  it("shows QuantiTray 2000 MPN and confidence range with a space after each label", () => {
+    render(<LookupComponent testtype="quanti2k" />);
+    fireEvent.changeText(screen.getByTestId("qt2k-large"), "10");
+    fireEvent.changeText(screen.getByTestId("qt2k-small"), "5");
+    expect(screen.getByText("MPN: 16.6")).toBeOnTheScreen();
+    expect(screen.getByText("Low: 9.6")).toBeOnTheScreen();
+    expect(screen.getByText("High: 26.8")).toBeOnTheScreen();
+  });
+});

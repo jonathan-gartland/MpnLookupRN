@@ -16,12 +16,12 @@ on:
       - main
       - master
     paths:
-      - 'package.json'
-      - 'pnpm-lock.yaml'
+      - package.json
+      - pnpm-lock.yaml
   pull_request:
     paths:
-      - 'package.json'
-      - 'pnpm-lock.yaml'
+      - package.json
+      - pnpm-lock.yaml
 
 jobs:
   doctor:

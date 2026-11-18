@@ -1,4 +1,5 @@
-/* eslint-env node */
+const path = require('node:path');
+
 /*
  * Env file to load and validate env variables
  * Be cautious; this file should not be imported into your source folder.
@@ -14,9 +15,8 @@
  * APP_ENV is passed as an inline variable while executing the command, for example: APP_ENV=staging pnpm build:android
  */
 const z = require('zod');
-
 const packageJSON = require('./package.json');
-const path = require('path');
+
 const APP_ENV = process.env.APP_ENV ?? 'development';
 const envPath = path.resolve(__dirname, `.env.${APP_ENV}`);
 
@@ -48,9 +48,9 @@ const SCHEME = 'mpnlookuprn'; // app scheme
  * @returns  {string}
  */
 
-const withEnvSuffix = (name) => {
+function withEnvSuffix(name) {
   return APP_ENV === 'production' ? name : `${name}.${APP_ENV}`;
-};
+}
 
 /**
  * 2nd part: Define your env variables schema
@@ -96,8 +96,8 @@ const buildTime = z.object({
  */
 const _clientEnv = {
   APP_ENV,
-  NAME: NAME,
-  SCHEME: SCHEME,
+  NAME,
+  SCHEME,
   BUNDLE_ID: withEnvSuffix(BUNDLE_ID),
   PACKAGE: withEnvSuffix(PACKAGE),
   VERSION: packageJSON.version,
@@ -123,7 +123,7 @@ const _buildTimeEnv = {
  * We use zod to validate our env variables based on the schema we defined above
  * If the validation fails we throw an error and log the error to the console with a detailed message about missed variables
  * If the validation passes we export the merged and parsed env variables to be used in the app.config.ts file as well as a ClientEnv object to be used in the client-side code
- **/
+ */
 const _env = {
   ..._clientEnv,
   ..._buildTimeEnv,
@@ -138,10 +138,10 @@ if (parsed.success === false) {
     parsed.error.flatten().fieldErrors,
 
     `\n❌ Missing variables in .env.${APP_ENV} file, Make sure all required variables are defined in the .env.${APP_ENV} file.`,
-    `\n💡 Tip: If you recently updated the .env.${APP_ENV} file and the error still persists, try restarting the server with the -c flag to clear the cache.`
+    `\n💡 Tip: If you recently updated the .env.${APP_ENV} file and the error still persists, try restarting the server with the -c flag to clear the cache.`,
   );
   throw new Error(
-    'Invalid environment variables, Check terminal for more details '
+    'Invalid environment variables, Check terminal for more details ',
   );
 }
 

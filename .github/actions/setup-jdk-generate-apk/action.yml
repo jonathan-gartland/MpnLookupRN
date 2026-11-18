@@ -26,19 +26,19 @@ inputs:
   APP_ENV:
     description: 'APP_ENV (one of): development, staging, production'
     required: true
-    default: 'staging'
+    default: staging
   ARCHITECTURES:
-    description: 'Comma-separated ABIs to build (e.g. x86_64). Empty = all.'
+    description: Comma-separated ABIs to build (e.g. x86_64). Empty = all.
     required: false
     default: ''
 
 runs:
-  using: 'composite'
+  using: composite
   steps:
     - name: Set Up JDK
       uses: actions/setup-java@v4
       with:
-        distribution: 'zulu' # See 'Supported distributions' for available options
+        distribution: zulu # See 'Supported distributions' for available options
         java-version: '17'
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4

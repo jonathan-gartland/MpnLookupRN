@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react-native';
 import { Slot } from 'expo-router';
-import React from 'react';
+import * as React from 'react';
 
 Sentry.init({
   dsn: 'https://cf2b7330a424516f2800096c44e85b57@o4512403073990657.ingest.us.sentry.io/4512403089195008',
