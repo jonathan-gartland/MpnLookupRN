@@ -85,6 +85,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     './plugins/with-ios-pods-deployment-target.js',
+    './plugins/with-ios-fmt-cxx17.js',
   ],
   extra: {
     ...ClientEnv,
