@@ -9,9 +9,10 @@ v7.0.2. We are incrementally moving toward parity with the current Obytes templa
 
 ## Stack
 
-- Expo SDK 52, React Native 0.76 (New Architecture on), Expo Router 4
+- Expo SDK 53, React Native 0.79, React 19 (New Architecture on), Expo Router 5
 - TypeScript, NativeWind 4, Zustand, React Query, MMKV
-- Sentry (`@sentry/react-native` 6.x, the version Expo SDK 52 supports; don't bump to 7+/8+ until the Expo upgrade)
+- Sentry (`@sentry/react-native` ~6.14, the version Expo SDK 53 supports; let `npx expo install --fix` pick it)
+- `query-string` is a direct dependency only because Expo Router imports it without declaring it
 - Jest + React Native Testing Library (unit), Maestro (end-to-end)
 - pnpm only (`preinstall` enforces it)
 
@@ -67,13 +68,12 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
 
 ## Known local-environment issues
 
-- Xcode 27 renamed Simulator to DeviceHub. Expo CLI (SDK 52) can't find it, so `pnpm ios` fails.
+- Xcode 27 renamed Simulator to DeviceHub. Expo CLI can't find it, so `pnpm ios` fails.
   Workaround: `pnpm start`, then `pnpm xcode` and Run from Xcode.
 - Xcode 27 requires pod deployment targets ≥ iOS 15; `plugins/with-ios-pods-deployment-target.js` handles it.
-- Xcode 27's clang can't compile fmt 11 (React Native 0.76.9) as C++20;
+- Xcode 27's clang can't compile fmt 11 (React Native 0.76.9+) as C++20;
   `plugins/with-ios-fmt-cxx17.js` builds that one pod as C++17.
-- The iOS 27 SDK breaks Swift in two SDK 52 packages. `patches/` fixes them through pnpm
-  `patchedDependencies` (expo-localization: non-exhaustive calendar switch; expo-dev-menu:
-  `TARGET_IPHONE_SIMULATOR`). Drop the patches when the Expo upgrade brings fixed versions.
+- If a native package fails to compile with the iOS 27 SDK, patch it with `pnpm patch`
+  (`patchedDependencies`) and drop the patch once an upgrade brings a fixed version.
 - Maestro on iOS can't match `id` and `text` in one selector (React Native nests the text in a
   child element). Assert them separately. Don't use `hideKeyboard`; tap outside the inputs instead.

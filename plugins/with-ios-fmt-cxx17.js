@@ -6,7 +6,7 @@ const {
   mergeContents,
 } = require('@expo/config-plugins/build/utils/generateCode');
 
-// React Native 0.76.9 ships fmt 11.0.2, whose consteval format strings don't compile
+// React Native 0.76.9+ ships fmt 11.0.2, whose consteval format strings don't compile
 // with Xcode 27's clang in C++20 mode. Build only the fmt pod as C++17.
 // react_native_post_install sets every pod to C++20, so this has to run after it.
 const snippet = `    installer.pods_project.targets.each do |target|
