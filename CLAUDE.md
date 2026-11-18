@@ -11,7 +11,7 @@ v7.0.2. We are incrementally moving toward parity with the current Obytes templa
 
 - Expo SDK 54, React Native 0.81, React 19.1 (New Architecture on), Expo Router 6
 - Reanimated 4 + react-native-worklets (the Babel plugin is still `react-native-reanimated/plugin`)
-- TypeScript, NativeWind 4, Zustand, React Query, MMKV 4 (Nitro Modules; mocked in `jest-setup.ts`)
+- TypeScript, NativeWind 4, Zustand 5, Zod 4, i18next 25, React Query, MMKV 4 (Nitro Modules; mocked in `jest-setup.ts`)
 - Sentry (`@sentry/react-native` ~7.2, the version Expo SDK 54 supports; let `npx expo install --fix` pick it)
 - Jest + React Native Testing Library (unit), Maestro (end-to-end)
 - pnpm only (`preinstall` enforces it)
@@ -103,3 +103,5 @@ Gradle cache and simulator/emulator images). Plan for 30 GB+ free.
   (`patchedDependencies`) and drop the patch once an upgrade brings a fixed version.
 - Maestro on iOS can't match `id` and `text` in one selector (React Native nests the text in a
   child element). Assert them separately. Don't use `hideKeyboard`; tap outside the inputs instead.
+- Hermes has no `Intl.PluralRules`, so i18next falls back to English-style `one`/`other` plurals.
+  No translation uses plurals today; add an `Intl.PluralRules` polyfill before adding Arabic ones.
