@@ -90,10 +90,12 @@ const QtDiv: React.FC<MyComponentProps> = ({ testtype }) => {
           <View style={styles.row}>
             <Text>
               Low:
+              {' '}
               {mpnVal[1]}
             </Text>
             <Text>
               High:
+              {' '}
               {mpnVal[2]}
             </Text>
           </View>
@@ -148,10 +150,12 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
           <View style={styles.row}>
             <Text>
               Low:
+              {' '}
               {mpnVal[1]}
             </Text>
             <Text>
               High:
+              {' '}
               {mpnVal[2]}
             </Text>
           </View>
