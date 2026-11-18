@@ -139,7 +139,10 @@
       "reactNativeDirectoryCheck": {
         "listUnknownPackages": false,
         "exclude": [
-          "react-native-restart"
+          "react-native-restart",
+          "app-icon-badge",
+          "react-native-edge-to-edge",
+          "react-native-flash-message"
         ]
       }
     },
