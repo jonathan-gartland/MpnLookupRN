@@ -46,6 +46,29 @@ pnpm check-all             # lint + type-check + translations lint + test
 maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a running emulator/simulator
 ```
 
+## New machine setup
+
+Native builds need a lot of disk (an iOS release build is ~3 GB of `ios/build`, plus Pods, the
+Gradle cache and simulator/emulator images). Plan for 30 GB+ free.
+
+1. **Tools:** Node 22 (same as CI), Xcode with an iOS simulator runtime, CocoaPods
+   (`brew install cocoapods`), Android Studio with JDK 17 and an API 34+ emulator. Then
+   `corepack enable` so the `packageManager` pnpm version is used.
+2. **Code:** `git clone https://github.com/jonathan-gartland/MpnLookupRN.git && cd MpnLookupRN && pnpm install`
+3. **Env files (not in git):** copy `.env.development` and `.env.local` from an existing machine
+   (AirDrop/scp, never commit them; `.env.local` holds tokens). `env.js` requires `API_URL`,
+   `VAR_NUMBER`, `VAR_BOOL` and `SECRET_KEY`; `.env.local` also has `SENTRY_AUTH_TOKEN`,
+   `EXPO_TOKEN` and `GH_TOKEN`. Without the originals, placeholder values like the ones CI uses
+   (see `.github/actions/setup-jdk-generate-apk`) are enough to build and run.
+4. **Native projects:** `pnpm prebuild:development --clean` (generates `ios/`, runs `pod install`).
+5. **Run:** iOS on Xcode 27: `pnpm start`, then `pnpm xcode` and Run (see known issues below).
+   Android: `pnpm android`. The first Android build downloads all Gradle dependencies and can
+   take an hour on a slow connection.
+6. **Maestro:** install the CI version,
+   `curl -Ls "https://get.maestro.mobile.dev" | MAESTRO_VERSION=2.12.1 bash`, then run the
+   `maestro test` command above against the running app.
+7. **Check:** `pnpm check-all` should pass, and all `.maestro/flows` should pass on both platforms.
+
 ## Testing
 
 - Every behavior change gets a Jest test. `__tests__/mpn.lookup.test.ts` holds the reference values.
