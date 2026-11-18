@@ -9,10 +9,10 @@ v7.0.2. We are incrementally moving toward parity with the current Obytes templa
 
 ## Stack
 
-- Expo SDK 53, React Native 0.79, React 19 (New Architecture on), Expo Router 5
+- Expo SDK 54, React Native 0.81, React 19.1 (New Architecture on), Expo Router 6
+- Reanimated 4 + react-native-worklets (the Babel plugin is still `react-native-reanimated/plugin`)
 - TypeScript, NativeWind 4, Zustand, React Query, MMKV
-- Sentry (`@sentry/react-native` ~6.14, the version Expo SDK 53 supports; let `npx expo install --fix` pick it)
-- `query-string` is a direct dependency only because Expo Router imports it without declaring it
+- Sentry (`@sentry/react-native` ~7.2, the version Expo SDK 54 supports; let `npx expo install --fix` pick it)
 - Jest + React Native Testing Library (unit), Maestro (end-to-end)
 - pnpm only (`preinstall` enforces it)
 

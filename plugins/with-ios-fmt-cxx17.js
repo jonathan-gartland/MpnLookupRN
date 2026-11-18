@@ -16,6 +16,24 @@ const snippet = `    installer.pods_project.targets.each do |target|
       end
     end`;
 
+// Offset from the `react_native_post_install(` line to just past its closing `)`.
+// Throws if the call isn't found, so a Podfile template change fails prebuild loudly.
+function linesUntilCallEnds(podfile) {
+  const lines = podfile.split('\n');
+  const start = lines.findIndex((line) =>
+    /react_native_post_install\(/.test(line)
+  );
+  const end = lines.findIndex(
+    (line, i) => i > start && /^\s*\)\s*$/.test(line)
+  );
+  if (start === -1 || end === -1) {
+    throw new Error(
+      'with-ios-fmt-cxx17: react_native_post_install(...) not found in Podfile'
+    );
+  }
+  return end - start + 1;
+}
+
 module.exports = function withIosFmtCxx17(config) {
   return withDangerousMod(config, [
     'ios',
@@ -26,9 +44,8 @@ module.exports = function withIosFmtCxx17(config) {
         tag: 'ios-fmt-cxx17',
         src: contents,
         newSrc: snippet,
-        // First line after the react_native_post_install(...) call in Expo's Podfile
-        anchor: /# This is necessary for Xcode 14, because it signs resource bundles/,
-        offset: 0,
+        anchor: /react_native_post_install\(/,
+        offset: linesUntilCallEnds(contents),
         comment: '#',
       });
       fs.writeFileSync(podfile, result.contents);
