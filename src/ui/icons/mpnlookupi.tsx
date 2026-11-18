@@ -1,8 +1,8 @@
-import * as React from 'react';
 import type { SvgProps } from 'react-native-svg';
+import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-export const MpnLookupi = ({ color = '#000', ...props }: SvgProps) => {
+export function MpnLookupi({ color = '#000', ...props }: SvgProps) {
   return (
     <Svg width={24} height={24} fill={color} {...props}>
       <Path
@@ -15,4 +15,4 @@ export const MpnLookupi = ({ color = '#000', ...props }: SvgProps) => {
       />
     </Svg>
   );
-};
+}

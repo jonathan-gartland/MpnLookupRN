@@ -1,5 +1,4 @@
-/* eslint-disable max-lines-per-function */
-import React from 'react';
+import * as React from 'react';
 import { I18nManager } from 'react-native';
 
 import { cleanup, render, screen, setup } from '@/core/test-utils';
@@ -8,7 +7,7 @@ import { Input } from './input';
 
 afterEach(cleanup);
 
-describe('Input component ', () => {
+describe('input component ', () => {
   it('renders correctly ', () => {
     render(<Input testID="input" />);
     expect(screen.getByTestId('input')).toBeOnTheScreen();

@@ -1,15 +1,13 @@
-/* eslint-disable max-lines-per-function */
-
-import React from 'react';
-
-import { cleanup, render, screen, setup } from '@/core/test-utils';
 import type { OptionType } from '@/ui/index';
+
+import * as React from 'react';
+import { cleanup, render, screen, setup } from '@/core/test-utils';
 
 import { Select } from './select';
 
 afterEach(cleanup);
 
-describe('Select component ', () => {
+describe('select component ', () => {
   const options: OptionType[] = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },

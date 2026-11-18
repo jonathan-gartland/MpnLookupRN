@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import type { TextInputProps } from 'react-native';
+import * as React from 'react';
+import { useState } from 'react';
 import {
   InputAccessoryView,
   Keyboard,
@@ -7,7 +9,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  type TextInputProps,
+
   View,
 } from 'react-native';
 
@@ -16,17 +18,17 @@ import { getMpn } from '@/util/mpn.lookup';
 // The iOS number pad has no return key, so a "Done" bar above it closes the keyboard
 const KEYBOARD_DONE_ID = 'mpn-keyboard-done';
 
-interface MyComponentProps {
+type MyComponentProps = {
   testtype: string;
-}
+};
 
-interface HeadingProps {
+type HeadingProps = {
   title: string;
-}
+};
 
 // selectTextOnFocus: typing replaces the current count instead of inserting
 // next to it (tapping "0" and typing 10 would otherwise give 100 or 010)
-const NumberInput: React.FC<TextInputProps> = (props) => (
+const NumberInput: React.FC<TextInputProps> = props => (
   <TextInput
     keyboardType="numeric"
     selectTextOnFocus
@@ -36,20 +38,22 @@ const NumberInput: React.FC<TextInputProps> = (props) => (
 );
 
 const KeyboardDoneBar: React.FC = () =>
-  Platform.OS === 'ios' ? (
-    <InputAccessoryView nativeID={KEYBOARD_DONE_ID}>
-      <View style={styles.doneBar}>
-        <Pressable
-          testID="keyboard-done"
-          accessibilityRole="button"
-          onPress={Keyboard.dismiss}
-          hitSlop={8}
-        >
-          <Text style={styles.doneText}>Done</Text>
-        </Pressable>
-      </View>
-    </InputAccessoryView>
-  ) : null;
+  Platform.OS === 'ios'
+    ? (
+        <InputAccessoryView nativeID={KEYBOARD_DONE_ID}>
+          <View style={styles.doneBar}>
+            <Pressable
+              testID="keyboard-done"
+              accessibilityRole="button"
+              onPress={Keyboard.dismiss}
+              hitSlop={8}
+            >
+              <Text style={styles.doneText}>Done</Text>
+            </Pressable>
+          </View>
+        </InputAccessoryView>
+      )
+    : null;
 
 const Heading: React.FC<HeadingProps> = ({ title }) => {
   return (
@@ -78,12 +82,20 @@ const QtDiv: React.FC<MyComponentProps> = ({ testtype }) => {
       {testtype === 'quanti' && mpnVal.length > 0 && (
         <View>
           <Text testID="qt-mpn-number" style={styles.result}>
-            MPN: {mpnVal[0]}
+            MPN:
+            {' '}
+            {mpnVal[0]}
           </Text>
           <Text style={styles.confidence}>95% Confidence</Text>
           <View style={styles.row}>
-            <Text>Low: {mpnVal[1]}</Text>
-            <Text>High: {mpnVal[2]}</Text>
+            <Text>
+              Low:
+              {mpnVal[1]}
+            </Text>
+            <Text>
+              High:
+              {mpnVal[2]}
+            </Text>
           </View>
         </View>
       )}
@@ -94,7 +106,6 @@ const QtDiv: React.FC<MyComponentProps> = ({ testtype }) => {
 const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
   const [inputQt2kL, setInputQt2kL] = useState(0);
   const [inputQt2kS, setInputQt2kS] = useState(0);
-
 
   const mpnVal = getMpn('qt2k', { large: inputQt2kL, small: inputQt2kS }) || [];
 
@@ -108,7 +119,7 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
             testID="qt2k-large"
             style={styles.input}
             value={String(inputQt2kL)}
-            onChangeText={(text) => setInputQt2kL(Number(text))}
+            onChangeText={text => setInputQt2kL(Number(text))}
           />
         </View>
         <View style={styles.inputWrapper}>
@@ -117,7 +128,7 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
             testID="qt2k-small"
             style={styles.input}
             value={String(inputQt2kS)}
-            onChangeText={(text) => setInputQt2kS(Number(text))}
+            onChangeText={text => setInputQt2kS(Number(text))}
           />
         </View>
       </View>
@@ -127,14 +138,22 @@ const Qt2kDiv: React.FC<MyComponentProps> = ({ testtype }) => {
             testID="qt2k-mpn-number"
             style={[styles.result, styles.qt2kmpn]}
           >
-            MPN: {mpnVal[0]}
+            MPN:
+            {' '}
+            {mpnVal[0]}
           </Text>
           <Text style={[styles.confidence, styles.qt2kmpn]}>
             95% Confidence
           </Text>
           <View style={styles.row}>
-            <Text>Low: {mpnVal[1]}</Text>
-            <Text>High: {mpnVal[2]}</Text>
+            <Text>
+              Low:
+              {mpnVal[1]}
+            </Text>
+            <Text>
+              High:
+              {mpnVal[2]}
+            </Text>
           </View>
         </View>
       )}
@@ -156,7 +175,7 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
             testID="legio-large"
             style={[styles.input, styles.inputQtl]}
             value={String(inputLL)}
-            onChangeText={(text) => setInputLL(Number(text))}
+            onChangeText={text => setInputLL(Number(text))}
           />
         </View>
         <View style={styles.inputWrapper}>
@@ -165,14 +184,16 @@ const QtLDiv: React.FC<MyComponentProps> = ({ testtype }) => {
             testID="legio-small"
             style={[styles.input, styles.inputQts]}
             value={String(inputLS)}
-            onChangeText={(text) => setInputLS(Number(text))}
+            onChangeText={text => setInputLS(Number(text))}
           />
         </View>
       </View>
       {testtype === 'legio' && (
         <View>
           <Text testID="legio-mpn-number" style={styles.result}>
-            MPN: {mpnVal}
+            MPN:
+            {' '}
+            {mpnVal}
           </Text>
         </View>
       )}

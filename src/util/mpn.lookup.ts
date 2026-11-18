@@ -1,4 +1,5 @@
-import { getQt2KMpn, getQtLegio, getQtMpn, type Mpn } from 'mpn-lookup';
+import type { Mpn } from 'mpn-lookup';
+import { getQt2KMpn, getQtLegio, getQtMpn } from 'mpn-lookup';
 
 type WellCounts = { large: number; small: number };
 type LegioMpn = ReturnType<typeof getQtLegio>;

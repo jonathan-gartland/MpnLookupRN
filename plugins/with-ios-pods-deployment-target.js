@@ -1,14 +1,14 @@
-/* eslint-env node */
-const fs = require('fs');
-const path = require('path');
-const { withDangerousMod } = require('expo/config-plugins');
+const fs = require('node:fs');
+const path = require('node:path');
 const {
   mergeContents,
 } = require('@expo/config-plugins/build/utils/generateCode');
+const { withDangerousMod } = require('expo/config-plugins');
 
 // Xcode 27 rejects pod targets (e.g. Sentry and SDWebImage resource bundles)
 // whose iOS deployment target is below 15. Raise them to Expo SDK 52's minimum.
 const MIN_IOS = '15.1';
+const POST_INSTALL = /post_install do \|installer\|/;
 
 const snippet = `    installer.pods_project.targets.each do |target|
       target.build_configurations.each do |build_config|
@@ -28,7 +28,7 @@ module.exports = function withIosPodsDeploymentTarget(config) {
         tag: 'ios-pods-deployment-target',
         src: contents,
         newSrc: snippet,
-        anchor: /post_install do \|installer\|/,
+        anchor: POST_INSTALL,
         offset: 1,
         comment: '#',
       });

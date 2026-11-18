@@ -1,4 +1,7 @@
-const validate = (message = '') => {
+const INTERPOLATION = /\{\{ ?(?:- |\w+?)(, ?)?\w+ ?\}\}/;
+const NESTING = /\$t\(\w+:\w+(?:\.\w+)*\)/;
+
+function validate(message = '') {
   if (!(message || '').trim()) {
     throw new SyntaxError('Message is Empty.');
   }
@@ -6,18 +9,18 @@ const validate = (message = '') => {
     throw new TypeError('Message must be a String.');
   }
   if (
-    (message.includes('{') || message.includes('}')) &&
-    !/{{ ?(?:- |\w+?)(, ?)?\w+? ?}}/g.test(message)
+    (message.includes('{') || message.includes('}'))
+    && !INTERPOLATION.test(message)
   ) {
     throw new SyntaxError(
-      'Interpolation error. See: https://www.i18next.com/misc/json-format'
+      'Interpolation error. See: https://www.i18next.com/misc/json-format',
     );
   }
-  if (message.includes('$t(') && !/\$t\([\w]+:\w+(?:\.\w+)*\)/g.test(message)) {
+  if (message.includes('$t(') && !NESTING.test(message)) {
     throw new SyntaxError(
-      'Nesting error. See: https://www.i18next.com/misc/json-format'
+      'Nesting error. See: https://www.i18next.com/misc/json-format',
     );
   }
-};
+}
 
 module.exports = validate;

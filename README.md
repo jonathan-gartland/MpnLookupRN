@@ -1,11 +1,11 @@
 <h1 align="center">
   <img alt="logo" src="./assets/icon.png" width="124px" style="border-radius:10px"/><br/>
-MPN Lookup RN using Expo</h1>  
+MPN Lookup RN using Expo</h1>
 
-[![Tests (jest)](https://github.com/jonathan-gartland/MpnLookupRN/actions/workflows/test.yml/badge.svg)](https://github.com/jonathan-gartland/MpnLookupRN/actions/workflows/test.yml). 
+[![Tests (jest)](https://github.com/jonathan-gartland/MpnLookupRN/actions/workflows/test.yml/badge.svg)](https://github.com/jonathan-gartland/MpnLookupRN/actions/workflows/test.yml).
 
-  
-> This Project is based on [Obytes starter](https://starter.obytes.com) and [Mpn Lookup NextJS](https://github.com/jonathan-gartland/mpn-lookup-nextjs) the documentation here is all boilerplate Obytes stuff, anything relevant to the mpn lookup app is explained in the aforementioned NextJS project.  
+
+> This Project is based on [Obytes starter](https://starter.obytes.com) and [Mpn Lookup NextJS](https://github.com/jonathan-gartland/mpn-lookup-nextjs) the documentation here is all boilerplate Obytes stuff, anything relevant to the mpn lookup app is explained in the aforementioned NextJS project.
 
 ## Requirements
 
@@ -23,7 +23,7 @@ Clone the repo to your machine and install deps :
 ```sh
 git clone https://github.com/jonathan-gartland/MpnLookupRN
 
-cd ./MpnLookupRN  
+cd ./MpnLookupRN
 
 pnpm install
 ```
@@ -51,8 +51,8 @@ pnpm android
 - [Data fetching](https://starter.obytes.com/guides/data-fetching)
 - [Contribute to starter](https://starter.obytes.com/how-to-contribute/)
 
-----  
-# License
+----
+## License
 
 This application is released under the [MIT license](LICENSE). You can use the code for any purpose, including commercial projects.
 
