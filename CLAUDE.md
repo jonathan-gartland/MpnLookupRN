@@ -89,11 +89,12 @@ Target: Obytes v10, which is [PR #543](https://github.com/obytes/react-native-te
 PRs to `main`), and the app must build and pass Maestro on both platforms after each one.
 Tick steps off here as they merge.
 
-- [ ] 1. **Finish v9 parity:** NativeWind 4 + Tailwind 3 → Uniwind + Tailwind 4, `tailwind-variants` 3.
-  Obytes v9.0.0 already had these. Optionally react-hook-form → TanStack Form (only `src/ui` uses it).
+- [x] 1. **Finish v9 parity:** NativeWind 4 + Tailwind 3 → Uniwind + Tailwind 4, `tailwind-variants` 3
+  (#21). Still open, optional: react-hook-form → TanStack Form (only `src/ui` uses it).
 - [ ] 2. **Expo SDK 57** (React Native 0.86, React 19.2). Navigation imports move to
   `expo-router/react-navigation`; the legacy architecture is gone. Remove the `@expo/cli` DeviceHub
-  patch, and recheck the Xcode 27 config plugins and `patchedDependencies`.
+  patch, and recheck the Xcode 27 config plugins and `patchedDependencies`. If React Native's
+  deprecated `SafeAreaView` (used in `src/app/index.tsx`) is gone, switch to `react-native-safe-area-context`.
 - [ ] 3. **Dependencies:** i18next 26, MMKV 4.3, Nitro Modules 0.37. Replace `react-native-restart`
   with Expo's `reloadAppAsync`, drop `react-native-edge-to-edge` (built into Expo), remove unused packages.
 - [ ] 4. **TypeScript 6:** explicit `paths` and an `@env` alias instead of `baseUrl`.
@@ -104,6 +105,11 @@ Tick steps off here as they merge.
   bypass `EXPO_NO_DOTENV`/`env.js`. Set `env = false` in `bunfig.toml` and confirm `bun run start`
   no longer sees `.env.local` values. `bun install` converts `pnpm-lock.yaml` to `bun.lock` itself.
 - [ ] 7. **Optional:** Nitro Fetch (the app makes no network calls today) and the opt-in Argent setup.
+- [ ] 8. **Fix the app layout** (after the upgrade steps): on iOS the Back button is cut off by the
+  bottom of the screen. `src/components/button-view.tsx` uses fixed sizes (`width: 412`,
+  `height: 580`, 160pt of header padding, Back pulled up with `top: -150`). Replace them with a
+  flexible layout in Uniwind `className`s: header at the top, test area filling and scrolling, Back
+  pinned to the bottom above the safe-area inset. Add a Maestro check that Back is fully visible.
 
 ## Known local-environment issues
 
