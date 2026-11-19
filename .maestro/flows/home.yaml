@@ -1,8 +1,7 @@
 appId: ${APP_ID}
 name: Home screen shows every test type
 ---
-- launchApp:
-    clearState: true
+- runFlow: ../subflows/launch-clean.yaml
 - assertVisible:
     id: mpnl-title
 - assertVisible: MPN Lookup

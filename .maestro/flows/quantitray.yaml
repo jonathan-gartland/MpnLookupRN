@@ -1,8 +1,7 @@
 appId: ${APP_ID}
 name: QuantiTray lookup shows MPN and confidence range
 ---
-- launchApp:
-    clearState: true
+- runFlow: ../subflows/launch-clean.yaml
 - tapOn:
     id: qt-button
 - assertVisible: QuantiTray® MPN

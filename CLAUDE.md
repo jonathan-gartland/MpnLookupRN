@@ -62,7 +62,9 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
 
 - Every behavior change gets a Jest test. `__tests__/mpn.lookup.test.ts` holds the reference values.
 - UI flows a user can see get a Maestro flow in `.maestro/flows/`. Select elements by `testID`;
-  add a `testID` to the component if one is missing.
+  add a `testID` to the component if one is missing. Start each flow with
+  `- runFlow: ../subflows/launch-clean.yaml` (not a bare `launchApp`): it retries the clean launch,
+  because the Android CI emulator sometimes kills the relaunched app ("Destroy timeout of remove-task").
 - App IDs: `com.mpnlookuprn.<env>` (development, staging) and `com.mpnlookuprn` (production).
 
 ## CI (GitHub Actions)
