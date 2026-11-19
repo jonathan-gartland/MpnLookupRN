@@ -153,5 +153,10 @@
   },
   "osMetadata": {
     "initVersion": "7.0.2"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@expo/cli@54.0.28": "patches/@expo__cli@54.0.28.patch"
+    }
   }
 }
