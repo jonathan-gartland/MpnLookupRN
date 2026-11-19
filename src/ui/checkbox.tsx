@@ -67,7 +67,7 @@ type LabelProps = {
 
 function Label({ text, testID, className = '' }: LabelProps) {
   return (
-    <Text testID={testID} className={` ${className} pl-2`}>
+    <Text testID={testID} className={`${className} pl-2`}>
       {text}
     </Text>
   );
@@ -165,7 +165,7 @@ export function RadioIcon({ checked = false }: IconProps) {
       <MotiView
         className={`size-[10px] rounded-[10px] ${
           checked && 'bg-primary-300'
-        } `}
+        }`}
         from={{ opacity: 0 }}
         animate={{ opacity: checked ? 1 : 0 }}
         transition={{ opacity: { duration: 50, type: 'timing' } }}
