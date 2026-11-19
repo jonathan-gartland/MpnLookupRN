@@ -94,8 +94,11 @@ Gradle cache and simulator/emulator images). Plan for 30 GB+ free.
 
 ## Known local-environment issues
 
-- Xcode 27 renamed Simulator to DeviceHub. Expo CLI can't find it, so `pnpm ios` fails.
-  Workaround: `pnpm start`, then `pnpm xcode` and Run from Xcode.
+- Xcode 27 replaced Simulator.app with DeviceHub, which Expo CLI 54 doesn't know about.
+  `patches/@expo__cli@54.0.28.patch` backports the DeviceHub support from Expo CLI 56 so
+  `pnpm ios` works. Drop the patch when upgrading to Expo SDK 56+ (SDK 58 fully supports Xcode 27).
+  If an `expo` update changes the `@expo/cli` version, the patch stops applying; recreate it
+  with `pnpm patch`.
 - Xcode 27 requires pod deployment targets ≥ iOS 15; `plugins/with-ios-pods-deployment-target.js` handles it.
 - Xcode 27's clang can't compile fmt 11 (React Native 0.76.9+) as C++20;
   `plugins/with-ios-fmt-cxx17.js` builds that one pod as C++17.
