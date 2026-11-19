@@ -43,7 +43,7 @@ export function ProgressBar({ ref, initialProgress = 0, className = '' }: Props 
     };
   });
   return (
-    <View className={twMerge(` bg-[#EAEAEA]`, className)}>
+    <View className={twMerge(`bg-[#EAEAEA]`, className)}>
       <Animated.View style={style} />
     </View>
   );

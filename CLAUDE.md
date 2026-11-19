@@ -11,7 +11,8 @@ v10 (see "Obytes v10 upgrade plan" below). Keep changes small and one concern pe
 
 - Expo SDK 54, React Native 0.81, React 19.1 (New Architecture on), Expo Router 6
 - Reanimated 4 + react-native-worklets (the Babel plugin is still `react-native-reanimated/plugin`)
-- TypeScript, NativeWind 4, Zustand 5, Zod 4, i18next 25, React Query, MMKV 4 (Nitro Modules; mocked in `jest-setup.ts`)
+- TypeScript, Uniwind + Tailwind 4 (theme in `src/global.css`; `uniwind-types.d.ts` is generated
+  by Metro, commit it as generated), Zustand 5, Zod 4, i18next 25, React Query, MMKV 4 (Nitro Modules; mocked in `jest-setup.ts`)
 - Sentry (`@sentry/react-native` ~7.2, the version Expo SDK 54 supports; let `npx expo install --fix` pick it)
 - Jest + React Native Testing Library (unit), Maestro (end-to-end)
 - pnpm only (`preinstall` enforces it)
