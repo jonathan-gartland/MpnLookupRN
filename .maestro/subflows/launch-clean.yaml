@@ -1,0 +1,15 @@
+appId: ${APP_ID}
+---
+# Launch the app with cleared state and wait for the home screen.
+# On the Android CI emulator, clearing state removes the previous app window, and Android's
+# "Destroy timeout of remove-task" can fire just after the relaunch and kill the new process,
+# leaving the app on its splash screen. Retrying the launch gets past that race.
+- retry:
+    maxRetries: 2
+    commands:
+      - launchApp:
+          clearState: true
+      - extendedWaitUntil:
+          visible:
+            id: mpnl-title
+          timeout: 15000

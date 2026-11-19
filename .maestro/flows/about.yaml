@@ -1,8 +1,7 @@
 appId: ${APP_ID}
 name: About screen explains how to use the app
 ---
-- launchApp:
-    clearState: true
+- runFlow: ../subflows/launch-clean.yaml
 - tapOn:
     id: about-button
 - assertVisible: How to use the App
