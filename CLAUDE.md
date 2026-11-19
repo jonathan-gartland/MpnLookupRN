@@ -98,7 +98,10 @@ Tick steps off here as they merge.
 - [ ] 4. **TypeScript 6:** explicit `paths` and an `@env` alias instead of `baseUrl`.
 - [ ] 5. **React Compiler** (`babel-plugin-react-compiler`).
 - [ ] 6. **Bun replaces pnpm:** `packageManager`, install guard, CI, husky hooks (fixes `post-merge`
-  checking the nonexistent `pnpm-lock.yml`) and the commands in this file.
+  checking the nonexistent `pnpm-lock.yml`) and the commands in this file. Bun loads `.env`,
+  `.env.local` etc. into every script by default, which would expose the `.env.local` tokens and
+  bypass `EXPO_NO_DOTENV`/`env.js`. Set `env = false` in `bunfig.toml` and confirm `bun run start`
+  no longer sees `.env.local` values. `bun install` converts `pnpm-lock.yaml` to `bun.lock` itself.
 - [ ] 7. **Optional:** Nitro Fetch (the app makes no network calls today) and the opt-in Argent setup.
 
 ## Known local-environment issues
