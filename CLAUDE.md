@@ -4,8 +4,8 @@ Mobile app that looks up the Most Probable Number (MPN) and 95% confidence range
 IDEXX QuantiTray®, QuantiTray®/2000 and Legiolert tests from a count of positive wells.
 
 Built from the [Obytes starter](https://github.com/obytes/react-native-template-obytes)
-v7.0.2. We are incrementally moving toward parity with the current Obytes template
-(v9: Expo SDK 54, React Native 0.81, ESLint 9). Keep changes small and one concern per PR.
+v7.0.2. We are incrementally moving toward parity with the Obytes template, now targeting
+v10 (see "Obytes v10 upgrade plan" below). Keep changes small and one concern per PR.
 
 ## Stack
 
@@ -79,6 +79,27 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
 - Conventional Commits (commitlint), e.g. `feat:`, `fix:`, `chore:`, `ci:`, `test:`.
 - No direct commits to main; the pre-commit hook blocks it and runs type-check, lint-staged and Jest.
 - Prefer existing Obytes patterns when adding features, so later template upgrades stay easy.
+
+## Obytes v10 upgrade plan
+
+Target: Obytes v10, which is [PR #543](https://github.com/obytes/react-native-template-obytes/pull/543)
+(branch `chore/template-upgrade`) until it is released. Compare against that branch, and follow its
+"Migrating to v10" guide once published. Each step is its own PR to `main` (some CI only runs on
+PRs to `main`), and the app must build and pass Maestro on both platforms after each one.
+Tick steps off here as they merge.
+
+- [ ] 1. **Finish v9 parity:** NativeWind 4 + Tailwind 3 → Uniwind + Tailwind 4, `tailwind-variants` 3.
+  Obytes v9.0.0 already had these. Optionally react-hook-form → TanStack Form (only `src/ui` uses it).
+- [ ] 2. **Expo SDK 57** (React Native 0.86, React 19.2). Navigation imports move to
+  `expo-router/react-navigation`; the legacy architecture is gone. Remove the `@expo/cli` DeviceHub
+  patch, and recheck the Xcode 27 config plugins and `patchedDependencies`.
+- [ ] 3. **Dependencies:** i18next 26, MMKV 4.3, Nitro Modules 0.37. Replace `react-native-restart`
+  with Expo's `reloadAppAsync`, drop `react-native-edge-to-edge` (built into Expo), remove unused packages.
+- [ ] 4. **TypeScript 6:** explicit `paths` and an `@env` alias instead of `baseUrl`.
+- [ ] 5. **React Compiler** (`babel-plugin-react-compiler`).
+- [ ] 6. **Bun replaces pnpm:** `packageManager`, install guard, CI, husky hooks (fixes `post-merge`
+  checking the nonexistent `pnpm-lock.yml`) and the commands in this file.
+- [ ] 7. **Optional:** Nitro Fetch (the app makes no network calls today) and the opt-in Argent setup.
 
 ## Known local-environment issues
 
