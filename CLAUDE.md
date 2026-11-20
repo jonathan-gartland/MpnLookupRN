@@ -60,6 +60,9 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
   `SECRET_KEY`. Placeholder values like the ones CI uses are enough to build and run.
 - **Maestro:** use the CI version,
   `curl -Ls "https://get.maestro.mobile.dev" | MAESTRO_VERSION=2.12.1 bash`.
+- **EAS:** the project is `@jonathan-gartland/mpnlookuprn` (owner and project ID in `env.js`, slug in
+  `app.config.ts`; they must match EAS). EAS holds the Android upload keystore for `com.mpnlookuprn`.
+  Play uploads are manual (no service account): build with EAS, upload the `.aab` in Play Console.
 
 ## Testing
 
