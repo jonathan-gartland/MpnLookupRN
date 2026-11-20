@@ -63,6 +63,10 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
 - **EAS:** the project is `@jonathan-gartland/mpnlookuprn` (owner and project ID in `env.js`, slug in
   `app.config.ts`; they must match EAS). EAS holds the Android upload keystore for `com.mpnlookuprn`.
   Play uploads are manual (no service account): build with EAS, upload the `.aab` in Play Console.
+  The version name is `package.json` `version`; EAS stores the Android `versionCode` remotely and the
+  production profile auto-increments it (`eas build:version:get -p android` shows it). The
+  production profile's `env` in `eas.json` supplies placeholder values for the unused template
+  variables `env.js` requires and disables the Sentry source-map upload, as CI does.
 
 ## Testing
 
