@@ -32,13 +32,14 @@ require('dotenv').config({
  * for example: if the APP_ENV is staging, the bundle id will be com.mpnlookuprn.staging
  */
 
-// TODO: Replace these values with your own
+// The EAS project is @jonathan-gartland/mpnlookuprn; owner, project id and the slug in
+// app.config.ts must match it or EAS builds and submits are refused.
 
 const BUNDLE_ID = 'com.mpnlookuprn'; // ios bundle id
 const PACKAGE = 'com.mpnlookuprn'; // android package name
 const NAME = 'mpnlookuprn'; // app name
-const EXPO_ACCOUNT_OWNER = 'expo-owner'; // expo account owner
-const EAS_PROJECT_ID = 'c3e1075b-6fe7-4686-aa49-35b46a229044'; // eas project id
+const EXPO_ACCOUNT_OWNER = 'jonathan-gartland'; // expo account owner
+const EAS_PROJECT_ID = 'aad66ee6-644a-4976-9f81-f91dd7c29cf4'; // eas project id
 const SCHEME = 'mpnlookuprn'; // app scheme
 
 /**
