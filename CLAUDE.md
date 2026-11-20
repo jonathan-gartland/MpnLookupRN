@@ -98,14 +98,14 @@ Tick steps off here as they merge.
 
 - [x] 1. **Finish v9 parity:** NativeWind 4 + Tailwind 3 → Uniwind + Tailwind 4, `tailwind-variants` 3
   (#21). Still open, optional: react-hook-form → TanStack Form (only `src/ui` uses it).
-- [ ] 2. **Expo SDK 57** (React Native 0.86, React 19.2). Navigation imports move to
-  `expo-router/react-navigation`; the legacy architecture is gone. Remove the `@expo/cli` DeviceHub
-  patch, and recheck the Xcode 27 config plugins and `patchedDependencies`. If React Native's
-  deprecated `SafeAreaView` (used in `src/app/index.tsx`) is gone, switch to `react-native-safe-area-context`.
+- [x] 2. **Expo SDK 57** (React Native 0.86, React 19.2) (#22). Also targets Android 16 (API 36),
+  which Google Play requires for updates from Oct 31, 2026.
 - [ ] 3. **Dependencies:** i18next 26, MMKV 4.3, Nitro Modules 0.37. Replace `react-native-restart`
-  with Expo's `reloadAppAsync`, drop `react-native-edge-to-edge` (built into Expo), remove unused packages.
-- [ ] 4. **TypeScript 6:** explicit `paths` and an `@env` alias instead of `baseUrl`.
-- [ ] 5. **React Compiler** (`babel-plugin-react-compiler`).
+  with Expo's `reloadAppAsync`, remove unused packages. (`react-native-edge-to-edge` was already
+  removed in #22.)
+- [x] 4. **TypeScript 6** (#22, because Expo 57 requires it): `paths` without `baseUrl`, `css.d.ts`.
+- [ ] 5. **React Compiler** (`babel-plugin-react-compiler`). Obytes also drops
+  `eslint-plugin-react-compiler`, whose rules now ship in `eslint-plugin-react-hooks` 7.
 - [ ] 6. **Bun replaces pnpm:** `packageManager`, install guard, CI, husky hooks (fixes `post-merge`
   checking the nonexistent `pnpm-lock.yml`) and the commands in this file. Bun loads `.env`,
   `.env.local` etc. into every script by default, which would expose the `.env.local` tokens and
@@ -117,6 +117,9 @@ Tick steps off here as they merge.
   `height: 580`, 160pt of header padding, Back pulled up with `top: -150`). Replace them with a
   flexible layout in Uniwind `className`s: header at the top, test area filling and scrolling, Back
   pinned to the bottom above the safe-area inset. Add a Maestro check that Back is fully visible.
+  Replace React Native's deprecated `SafeAreaView` in `src/app/index.tsx` (it does nothing on
+  Android) with `react-native-safe-area-context`: Android 16 forces edge-to-edge, so without real
+  insets content can sit under the system bars. Do this before the next Play Store release.
 
 ## Known local-environment issues
 
