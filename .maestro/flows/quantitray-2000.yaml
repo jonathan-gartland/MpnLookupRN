@@ -1,8 +1,7 @@
 appId: ${APP_ID}
 name: QuantiTray 2000 lookup uses large and small wells
 ---
-- launchApp:
-    clearState: true
+- runFlow: ../subflows/launch-clean.yaml
 - tapOn:
     id: qt2k-button
 - assertVisible: QuantiTray2000® MPN

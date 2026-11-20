@@ -33,7 +33,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   orientation: 'portrait',
   icon: './assets/icon.png',
   userInterfaceStyle: 'automatic',
-  newArchEnabled: true,
   updates: {
     fallbackToCacheTimeout: 0,
   },
@@ -74,7 +73,17 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     'expo-localization',
     'expo-router',
     ['app-icon-badge', appIconBadgeConfig],
-    ['react-native-edge-to-edge'],
+    'expo-image',
+    'expo-status-bar',
+    [
+      'expo-build-properties',
+      {
+        ios: {
+          // Required to build with the iOS 27 SDK (Xcode 27).
+          enableSceneSupport: true,
+        },
+      },
+    ],
     [
       '@sentry/react-native/expo',
       {

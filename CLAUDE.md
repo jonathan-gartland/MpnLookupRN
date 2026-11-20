@@ -9,11 +9,14 @@ v10 (see "Obytes v10 upgrade plan" below). Keep changes small and one concern pe
 
 ## Stack
 
-- Expo SDK 54, React Native 0.81, React 19.1 (New Architecture on), Expo Router 6
-- Reanimated 4 + react-native-worklets (the Babel plugin is still `react-native-reanimated/plugin`)
-- TypeScript, Uniwind + Tailwind 4 (theme in `src/global.css`; `uniwind-types.d.ts` is generated
+- Expo SDK 57, React Native 0.86, React 19.2 (New Architecture only), Expo Router 57.
+  Import React Navigation APIs from `expo-router/react-navigation`, not `@react-navigation/*`
+- Reanimated 4.5 + react-native-worklets 0.10 (`babel-preset-expo` adds the worklets Babel plugin;
+  both are mocked in `jest-setup.ts`)
+- TypeScript 6 (no `baseUrl`; aliases are in `paths`), Uniwind + Tailwind 4 (theme in `src/global.css`; `uniwind-types.d.ts` is generated
   by Metro, commit it as generated), Zustand 5, Zod 4, i18next 25, React Query, MMKV 4 (Nitro Modules; mocked in `jest-setup.ts`)
-- Sentry (`@sentry/react-native` ~7.2, the version Expo SDK 54 supports; let `npx expo install --fix` pick it)
+- Sentry (`@sentry/react-native` 7.11, the version Expo SDK 57 supports; let `npx expo install --fix` pick it).
+  Local release builds need `SENTRY_DISABLE_AUTO_UPLOAD=true`, as in CI
 - Jest + React Native Testing Library (unit), Maestro (end-to-end)
 - pnpm only (`preinstall` enforces it)
 
@@ -62,7 +65,11 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
 
 - Every behavior change gets a Jest test. `__tests__/mpn.lookup.test.ts` holds the reference values.
 - UI flows a user can see get a Maestro flow in `.maestro/flows/`. Select elements by `testID`;
-  add a `testID` to the component if one is missing.
+  add a `testID` to the component if one is missing. Start each flow with
+  `- runFlow: ../subflows/launch-clean.yaml` (not a bare `launchApp`): it retries the clean launch,
+  because the Android CI emulator sometimes kills the relaunched app ("Destroy timeout of remove-task").
+- Run Maestro against a release build (`SENTRY_DISABLE_AUTO_UPLOAD=true pnpm ios --configuration Release`).
+  The flows use `clearState`, which leaves a development build stuck on the Expo dev launcher.
 - App IDs: `com.mpnlookuprn.<env>` (development, staging) and `com.mpnlookuprn` (production).
 
 ## CI (GitHub Actions)
@@ -113,11 +120,11 @@ Tick steps off here as they merge.
 
 ## Known local-environment issues
 
-- Xcode 27 replaced Simulator.app with DeviceHub, which Expo CLI 54 doesn't know about.
-  `patches/@expo__cli@54.0.28.patch` backports the DeviceHub support from Expo CLI 56 so
-  `pnpm ios` works. Drop the patch when upgrading to Expo SDK 56+ (SDK 58 fully supports Xcode 27).
-  If an `expo` update changes the `@expo/cli` version, the patch stops applying; recreate it
-  with `pnpm patch`.
+- Xcode 27 replaced Simulator.app with DeviceHub. Expo CLI 57 finds DeviceHub, so `pnpm ios` works
+  (the CLI 54 patch was removed). Expo's fix for `run:ios` treating `devicectl`-listed simulators as
+  physical devices only arrives in SDK 58; if a simulator install fails that way, pass `--device <udid>`.
+- Building with the iOS 27 SDK requires iOS scene support; `expo-build-properties`
+  (`ios.enableSceneSupport`) in `app.config.ts` turns it on.
 - Xcode 27 requires pod deployment targets ≥ iOS 15; `plugins/with-ios-pods-deployment-target.js` handles it.
 - Xcode 27's clang can't compile fmt 11 (React Native 0.76.9+) as C++20;
   `plugins/with-ios-fmt-cxx17.js` builds that one pod as C++17.
