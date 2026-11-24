@@ -9,15 +9,19 @@ v7.0.2. We are incrementally moving toward parity with the current Obytes templa
 
 ## Stack
 
-- Expo SDK 57, React Native 0.86, React 19.2 (New Architecture only), Expo Router 57.
+- Expo SDK 58, React Native 0.88, React 19.3 (New Architecture only), Expo Router 58.
   Import React Navigation APIs from `expo-router/react-navigation`, not `@react-navigation/*`
-- Reanimated 4.5 + react-native-worklets 0.10 (`babel-preset-expo` adds the worklets Babel plugin;
-  both are mocked in `jest-setup.ts`)
+  (SDK 58 removed much of that surface, e.g. `NavigationContainer`). React Native 0.87+ has a strict
+  TypeScript API: no deep imports from `react-native/Libraries/*`; type refs with
+  `React.ComponentRef<typeof Component>`.
+- Reanimated 4.7 + react-native-worklets 0.13 (`babel-preset-expo` adds the worklets Babel plugin;
+  both are mocked in `jest-setup.ts`). Android release builds use R8 minification (SDK 58 default).
 - TypeScript 6 (no `baseUrl`; aliases are in `paths`), Uniwind + Tailwind 4 (theme in `src/global.css`; `uniwind-types.d.ts` is generated
   by Metro, commit it as generated), Zustand 5, Zod 4, i18next 25, React Query, MMKV 4 (Nitro Modules; mocked in `jest-setup.ts`)
-- Sentry (`@sentry/react-native` 7.11, the version Expo SDK 57 supports; let `npx expo install --fix` pick it).
-  Local release builds need `SENTRY_DISABLE_AUTO_UPLOAD=true`, as in CI
-- Jest + React Native Testing Library (unit), Maestro (end-to-end)
+- Sentry (`@sentry/react-native` 8.28, the version Expo SDK 58 supports; let `npx expo install --fix` pick it).
+  Optional for this app. Local release builds need `SENTRY_DISABLE_AUTO_UPLOAD=true`, as in CI
+- Jest 30 + React Native Testing Library 13 (matchers register on import; no `extend-expect`), Maestro
+  (end-to-end). `@react-native/jest-preset` must match the React Native version (a peer of `jest-expo`)
 - pnpm only (`preinstall` enforces it)
 
 ## Layout
@@ -77,6 +81,9 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
   because the Android CI emulator sometimes kills the relaunched app ("Destroy timeout of remove-task").
 - Run Maestro against a release build (`SENTRY_DISABLE_AUTO_UPLOAD=true pnpm ios --configuration Release`).
   The flows use `clearState`, which leaves a development build stuck on the Expo dev launcher.
+  On iOS, `pnpm ios` ends by opening the dev client's link, and the simulator then shows an
+  "Open in “mpnlookuprn”?" system dialog that covers the app and makes every flow fail. Tap Cancel
+  before running Maestro (`maestro` can do it: `tapOn: {text: Cancel, optional: true}`).
 - App IDs: `com.mpnlookuprn.<env>` (development, staging) and `com.mpnlookuprn` (production).
 
 ## CI (GitHub Actions)
@@ -97,11 +104,11 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
 
 ## Known local-environment issues
 
-- Xcode 27 replaced Simulator.app with DeviceHub. Expo CLI 57 finds DeviceHub, so `pnpm ios` works
-  (the CLI 54 patch was removed). Expo's fix for `run:ios` treating `devicectl`-listed simulators as
-  physical devices only arrives in SDK 58; if a simulator install fails that way, pass `--device <udid>`.
-- Building with the iOS 27 SDK requires iOS scene support; `expo-build-properties`
-  (`ios.enableSceneSupport`) in `app.config.ts` turns it on.
+- Xcode 27 replaced Simulator.app with DeviceHub. Expo CLI 58 finds and focuses it, so `pnpm ios` works.
+- The iOS 27 SDK requires the UIScene lifecycle; SDK 58's prebuild generates it (no config needed).
+- After big dependency upgrades, pnpm can keep old versions of peers in the lockfile (seen with
+  `@react-native/jest-preset` and `@expo/dom-webview`). If Jest or `expo-doctor` complains about a
+  version, check `pnpm why <pkg>`; a clean `rm -rf node_modules && pnpm install` also helps.
 - Xcode 27 requires pod deployment targets ≥ iOS 15; `plugins/with-ios-pods-deployment-target.js` handles it.
 - Xcode 27's clang can't compile fmt 11 (React Native 0.76.9+) as C++20;
   `plugins/with-ios-fmt-cxx17.js` builds that one pod as C++17.

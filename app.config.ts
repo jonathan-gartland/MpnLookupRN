@@ -76,15 +76,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     'expo-image',
     'expo-status-bar',
     [
-      'expo-build-properties',
-      {
-        ios: {
-          // Required to build with the iOS 27 SDK (Xcode 27).
-          enableSceneSupport: true,
-        },
-      },
-    ],
-    [
       '@sentry/react-native/expo',
       {
         url: 'https://sentry.io/',

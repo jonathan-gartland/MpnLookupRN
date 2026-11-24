@@ -1,7 +1,7 @@
 /* eslint-disable ts/ban-ts-comment */
 /* eslint-disable no-restricted-globals */
 
-import '@testing-library/react-native/extend-expect';
+// Testing Library 13 registers its Jest matchers automatically on import (no extend-expect).
 
 // Reanimated 4.5 / worklets 0.10 need their native module at import time, which Jest
 // doesn't have. Same mocks as the Obytes v10 template.
