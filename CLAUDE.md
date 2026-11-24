@@ -17,7 +17,8 @@ v7.0.2. We are incrementally moving toward parity with the current Obytes templa
 - Reanimated 4.7 + react-native-worklets 0.13 (`babel-preset-expo` adds the worklets Babel plugin;
   both are mocked in `jest-setup.ts`). Android release builds use R8 minification (SDK 58 default).
 - TypeScript 6 (no `baseUrl`; aliases are in `paths`), Uniwind + Tailwind 4 (theme in `src/global.css`; `uniwind-types.d.ts` is generated
-  by Metro, commit it as generated), Zustand 5, Zod 4, i18next 25, React Query, MMKV 4 (Nitro Modules; mocked in `jest-setup.ts`)
+  by Metro, commit it as generated), Zustand 5, Zod 4, i18next 25, React Query, MMKV 4.3 (Nitro Modules 0.37;
+  mocked in `jest-setup.ts`; 4.1 failed Android builds under AGP 9 with a duplicate `com.tencent.mmkv` namespace)
 - Sentry (`@sentry/react-native` 8.28, the version Expo SDK 58 supports; let `npx expo install --fix` pick it).
   Optional for this app. Local release builds need `SENTRY_DISABLE_AUTO_UPLOAD=true`, as in CI
 - Jest 30 + React Native Testing Library 13 (matchers register on import; no `extend-expect`), Maestro
