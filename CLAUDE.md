@@ -3,9 +3,10 @@
 Mobile app that looks up the Most Probable Number (MPN) and 95% confidence range for
 IDEXX QuantiTray®, QuantiTray®/2000 and Legiolert tests from a count of positive wells.
 
-Built from the [Obytes starter](https://github.com/obytes/react-native-template-obytes)
-v7.0.2. We are incrementally moving toward parity with the current Obytes template
-(v9: Expo SDK 54, React Native 0.81, ESLint 9). Keep changes small and one concern per PR.
+Started from the [Obytes starter](https://github.com/obytes/react-native-template-obytes)
+v7.0.2 and caught up with its v9 stack, but no longer tracks the template: follow current Expo and
+React Native guidance and keep the project on the latest Expo SDK. Obytes is a useful reference, not a
+target. Keep changes small and one concern per PR.
 
 ## Stack
 
@@ -93,7 +94,8 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
   Obytes v9 template. There is no Prettier; run `pnpm lint:fix` instead.
 - Conventional Commits (commitlint), e.g. `feat:`, `fix:`, `chore:`, `ci:`, `test:`.
 - No direct commits to main; the pre-commit hook blocks it and runs type-check, lint-staged and Jest.
-- Prefer existing Obytes patterns when adding features, so later template upgrades stay easy.
+- Follow Expo's current docs and upgrade guides for new features and SDK upgrades. When the starter
+  code in `src/ui/` or `src/core/` gets in the way, change or remove it rather than working around it.
 
 ## Known local-environment issues
 
