@@ -39,6 +39,20 @@ describe('env validation', () => {
     expect(ClientEnv).not.toHaveProperty('SECRET_KEY');
   });
 
+  it('ships production Android as the Play listing com.practiceapp4, keeping the iOS bundle ID', () => {
+    process.env.APP_ENV = 'production';
+    const { Env } = loadEnv();
+
+    expect(Env.PACKAGE).toBe('com.practiceapp4');
+    expect(Env.BUNDLE_ID).toBe('com.mpnlookuprn');
+  });
+
+  it('keeps com.mpnlookuprn with an environment suffix outside production', () => {
+    const { Env } = loadEnv();
+
+    expect(Env.PACKAGE).toBe('com.mpnlookuprn.staging');
+  });
+
   it('reports the invalid field and throws', () => {
     process.env.VAR_NUMBER = 'not-a-number';
     const error = jest.spyOn(console, 'error').mockImplementation(() => {});

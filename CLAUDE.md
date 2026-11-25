@@ -67,8 +67,10 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
 - **Maestro:** use the CI version,
   `curl -Ls "https://get.maestro.mobile.dev" | MAESTRO_VERSION=2.12.1 bash`.
 - **EAS:** the project is `@jonathan-gartland/mpnlookuprn` (owner and project ID in `env.js`, slug in
-  `app.config.ts`; they must match EAS). EAS holds the Android upload keystore for `com.mpnlookuprn`.
-  Play uploads are manual (no service account): build with EAS, upload the `.aab` in Play Console.
+  `app.config.ts`; they must match EAS). Production Android builds use the package `com.practiceapp4`,
+  the existing Play listing "MPN Lookup" (`PRODUCTION_PACKAGE` in `env.js`); its upload keystore (SHA-1
+  `D3:37:15:B2…`) must be the EAS credential for `com.practiceapp4` in this project, or Play rejects the
+  bundle. Play uploads are manual (no service account): build with EAS, upload the `.aab` in Play Console.
   The version name is `package.json` `version`; EAS stores the Android `versionCode` remotely and the
   production profile auto-increments it (`eas build:version:get -p android` shows it). The
   production profile's `env` in `eas.json` supplies placeholder values for the unused template
@@ -86,7 +88,8 @@ maestro test .maestro --env APP_ID=com.mpnlookuprn.development   # E2E on a runn
   On iOS, `pnpm ios` ends by opening the dev client's link, and the simulator then shows an
   "Open in “mpnlookuprn”?" system dialog that covers the app and makes every flow fail. Tap Cancel
   before running Maestro (`maestro` can do it: `tapOn: {text: Cancel, optional: true}`).
-- App IDs: `com.mpnlookuprn.<env>` (development, staging) and `com.mpnlookuprn` (production).
+- App IDs: `com.mpnlookuprn.<env>` (development, staging); production is `com.mpnlookuprn` on iOS and
+  `com.practiceapp4` on Android.
 
 ## CI (GitHub Actions)
 
