@@ -3,15 +3,14 @@ import type { RenderOptions } from '@testing-library/react-native';
 import type { ReactElement } from 'react';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { render, userEvent } from '@testing-library/react-native';
-import { NavigationContainer } from 'expo-router/react-navigation';
 import * as React from 'react';
 import '@shopify/flash-list/jestSetup';
 
+// Expo Router 58 no longer exports NavigationContainer, and none of the UI kit components use
+// navigation, so the wrapper only provides the bottom sheet context.
 function createAppWrapper() {
   return ({ children }: { children: React.ReactNode }) => (
-    <BottomSheetModalProvider>
-      <NavigationContainer>{children}</NavigationContainer>
-    </BottomSheetModalProvider>
+    <BottomSheetModalProvider>{children}</BottomSheetModalProvider>
   );
 }
 
