@@ -36,7 +36,10 @@ require('dotenv').config({
 // app.config.ts must match it or EAS builds and submits are refused.
 
 const BUNDLE_ID = 'com.mpnlookuprn'; // ios bundle id
-const PACKAGE = 'com.mpnlookuprn'; // android package name
+const PACKAGE = 'com.mpnlookuprn'; // android package name (development/staging get a suffix)
+// Production Android ships as the existing Google Play listing "MPN Lookup", whose package is
+// com.practiceapp4 (it predates this repo). iOS keeps BUNDLE_ID.
+const PRODUCTION_PACKAGE = 'com.practiceapp4';
 const NAME = 'mpnlookuprn'; // app name
 const EXPO_ACCOUNT_OWNER = 'jonathan-gartland'; // expo account owner
 const EAS_PROJECT_ID = 'aad66ee6-644a-4976-9f81-f91dd7c29cf4'; // eas project id
@@ -100,7 +103,7 @@ const _clientEnv = {
   NAME,
   SCHEME,
   BUNDLE_ID: withEnvSuffix(BUNDLE_ID),
-  PACKAGE: withEnvSuffix(PACKAGE),
+  PACKAGE: APP_ENV === 'production' ? PRODUCTION_PACKAGE : withEnvSuffix(PACKAGE),
   VERSION: packageJSON.version,
 
   // ADD YOUR ENV VARS HERE TOO
